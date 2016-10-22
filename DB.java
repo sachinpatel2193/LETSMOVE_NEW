@@ -54,7 +54,7 @@ public class DB {
 
         } catch (Exception e) {
             System.out.println("Error = " + e);
-
+            System.out.println("Hello");
 
         }
     }
