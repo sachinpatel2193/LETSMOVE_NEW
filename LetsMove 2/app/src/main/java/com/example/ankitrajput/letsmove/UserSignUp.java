@@ -75,11 +75,11 @@ public class UserSignUp extends AppCompatActivity {
 
                 String fname = firstname.getText().toString();
                 String lname = lastname.getText().toString();
-                String e = email.getText().toString();
+                String eMail = email.getText().toString();
                 String pass1 = p1.getText().toString();
                 String pass2 = p2.getText().toString();
-                String m = mobile.getText().toString();
-
+                String mobile_num = mobile.getText().toString();
+                int user_type_id = 1;
                 String name = fname + " " + lname;
 
                 String EMAIL_REGEX =
@@ -89,9 +89,9 @@ public class UserSignUp extends AppCompatActivity {
                                 + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
                                 + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
                                 + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
-                Boolean b = e.matches(EMAIL_REGEX);
+                Boolean b = eMail.matches(EMAIL_REGEX);
 
-                if (name.equals("") || e.equals("") || pass1.equals("") || pass2.equals("") || m.equals("")) {
+                if (name.equals("") || eMail.equals("") || pass1.equals("") || pass2.equals("") || mobile_num.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(UserSignUp.this);
                     builder.setTitle("Inavalid Data ! Fill all details");
 
@@ -128,7 +128,7 @@ public class UserSignUp extends AppCompatActivity {
                         }
                     });
                     builder.show();
-                } else if (!(m.length() == 10)) {
+                } else if (!(mobile_num.length() == 10)) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(UserSignUp.this);
                     builder.setTitle("Invalid mobile number ! Try Again");
 
@@ -143,10 +143,10 @@ public class UserSignUp extends AppCompatActivity {
                 } else {
                     try {
 
-                        String s = DB.check_email(e);
+                        String s = DB.check_email(eMail);
                         if (s.equals("1")) {
                             btn_signup.setClickable(false);
-                            DB.user_signup(e, name, pass1, m);
+                            DB.user_signup(eMail, name, pass1, mobile_num, user_type_id);
                             finish();
                             startActivity(new Intent(UserSignUp.this, UserLogin.class));
                             Toast.makeText(UserSignUp.this, "Signup Successfull", Toast.LENGTH_SHORT).show();

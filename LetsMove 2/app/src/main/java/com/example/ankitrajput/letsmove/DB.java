@@ -52,29 +52,22 @@ public class DB {
     static String get_transporter_password = "";
     static String get_transporter_phoneNumber = "";
     //static public final String URL_LINK = "http://10.0.2.2:8080/android/LetsMove/";
-    static public final String URL_LINK = "http://conestoga.freeoda.com/LetsMove/";
+    static public final String URL_LINK = "http://sachinapatel.com/LetsMove/";
     static StrictMode.ThreadPolicy th = new StrictMode.ThreadPolicy.Builder().build();
 
     ///////////////////////////////////send_user_signup_data_to_database_starts//////////////////////////////////////////
-    public static void user_signup(String email, String name, String p, String m) {
-
+    public static void user_signup(String email, String name, String password, String mobile, int user_type_id) {
         HttpClient httpClient = new DefaultHttpClient();
         StrictMode.setThreadPolicy(th);
-
-
         try {
-
             name = URLEncoder.encode(name, "utf-8");
-            p = URLEncoder.encode(p, "utf-8");
+            password = URLEncoder.encode(password, "utf-8");
 
-            String link = URL_LINK + "signup_user.php?email=" + email + "&name=" + name + "&password=" + p + "&mobile=" + m;
+            String link = URL_LINK + "signup_user.php?email=" + email + "&name=" + name + "&password=" + password + "&mobile=" + mobile + "&user_type_id=" + user_type_id;
             HttpGet httpGet = new HttpGet(link);
             httpClient.execute(httpGet);
-
         } catch (Exception e) {
             System.out.println("Error = " + e);
-
-
         }
     }
 
@@ -124,20 +117,15 @@ public class DB {
             HttpGet httpGet = new HttpGet(link);
 
             httpClient.execute(httpGet);
-
         } catch (Exception e) {
             System.out.println("Error = " + e);
-
-
         }
-
     }
 
     ///////////////////////////////////////////////////chaeck_login_user/////////////////////////////////////////////////////
     public static String check_user(String email, String password) {
         HttpClient httpClient = new DefaultHttpClient();
         StrictMode.setThreadPolicy(th);
-
 
         String status = null;
         try {
@@ -192,7 +180,6 @@ public class DB {
     public static String check_email(String email) {
         HttpClient httpClient = new DefaultHttpClient();
         StrictMode.setThreadPolicy(th);
-
 
         String status = null;
         try {
