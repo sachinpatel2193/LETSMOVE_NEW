@@ -1,8 +1,11 @@
 package com.example.ankitrajput.letsmove;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -10,7 +13,7 @@ import org.w3c.dom.Text;
 public class ViewUserDetails extends AppCompatActivity {
 
     public TextView user_details_Name, user_details_Email, user_details_Password, user_details_Mobile;
-
+    public Button edit_user_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,15 @@ public class ViewUserDetails extends AppCompatActivity {
         user_details_Email.setText(DB.get_user_email);
         user_details_Password.setText(DB.get_user_password);
         user_details_Mobile.setText(DB.get_user_mobile);
+
+        edit_user_button=(Button)findViewById(R.id.btn_edit_user_details);
+
+        edit_user_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                startActivity(new Intent(ViewUserDetails.this, edit_user_details.class));
+            }
+        });
 
     }
 }

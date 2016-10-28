@@ -79,7 +79,7 @@ public class UserSignUp extends AppCompatActivity {
                 String pass1 = p1.getText().toString();
                 String pass2 = p2.getText().toString();
                 String mobile_num = mobile.getText().toString();
-                int user_type_id = 1;
+                String user_type = "user";
                 String name = fname + " " + lname;
 
                 String EMAIL_REGEX =
@@ -146,7 +146,7 @@ public class UserSignUp extends AppCompatActivity {
                         String s = DB.check_email(eMail);
                         if (s.equals("1")) {
                             btn_signup.setClickable(false);
-                            DB.user_signup(eMail, name, pass1, mobile_num, user_type_id);
+                            DB.user_signup(eMail, name, pass1, mobile_num, user_type);
                             finish();
                             startActivity(new Intent(UserSignUp.this, UserLogin.class));
                             Toast.makeText(UserSignUp.this, "Signup Successfull", Toast.LENGTH_SHORT).show();

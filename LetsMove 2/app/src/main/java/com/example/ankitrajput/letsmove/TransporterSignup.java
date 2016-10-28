@@ -35,7 +35,7 @@ public class TransporterSignup extends AppCompatActivity {
                 String pass2 = company_p2.getText().toString();
 
                 String m = company_mobile.getText().toString();
-
+                String user_type = "transporter";
 
                 String EMAIL_REGEX =
                         "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
@@ -101,7 +101,7 @@ public class TransporterSignup extends AppCompatActivity {
                         String s = DB.check_email(e);
                         if (s.equals("1")) {
                             btn_company_signup.setClickable(false);
-                            DB.signup_transporter(e, name, pass1, m);
+                            DB.user_signup(e, name, pass1, m, user_type);
                             finish();
                             startActivity(new Intent(TransporterSignup.this, UserLogin.class));
                             Toast.makeText(TransporterSignup.this, "Signup Successfull", Toast.LENGTH_SHORT).show();

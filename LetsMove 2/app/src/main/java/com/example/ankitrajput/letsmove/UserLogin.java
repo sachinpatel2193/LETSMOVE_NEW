@@ -39,7 +39,7 @@ public class UserLogin extends AppCompatActivity {
     CallbackManager callbackManager;
     LoginButton loginButton;
     Button Signup_button;
-    int user_type_id = 1;
+    //int user_type_id = 1;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -126,7 +126,7 @@ public class UserLogin extends AppCompatActivity {
                         if(status_facebook_email.equals("1")) {
 
 
-                            DB.user_signup(email_facebook, name_facebook, "", "", user_type_id);
+                            DB.user_signup(email_facebook, name_facebook, "", "", ""/*user_type*/);
                             System.out.println("Login successfull with sending data to server");
 
                         }

@@ -44,7 +44,8 @@
         <activity android:name=".AddressActivity" />
         <activity android:name=".PostDetails" />
         <activity android:name=".ViewUserDetails" />
-        <activity android:name=".ViewTransporterDetails"></activity>
+        <activity android:name=".ViewTransporterDetails" />
+        <activity android:name=".edit_user_details"></activity>
     </application>
 
 </manifest>

@@ -52,18 +52,18 @@ public class DB {
     static String get_transporter_password = "";
     static String get_transporter_phoneNumber = "";
     //static public final String URL_LINK = "http://10.0.2.2:8080/android/LetsMove/";
-    static public final String URL_LINK = "http://sachinapatel.com/LetsMove/";
+    static public final String URL_LINK = "http://www.sachinapatel.com/LetsMove/";
     static StrictMode.ThreadPolicy th = new StrictMode.ThreadPolicy.Builder().build();
 
     ///////////////////////////////////send_user_signup_data_to_database_starts//////////////////////////////////////////
-    public static void user_signup(String email, String name, String password, String mobile, int user_type_id) {
+    public static void user_signup(String email, String name, String password, String mobile, String user_type) {
         HttpClient httpClient = new DefaultHttpClient();
         StrictMode.setThreadPolicy(th);
         try {
             name = URLEncoder.encode(name, "utf-8");
             password = URLEncoder.encode(password, "utf-8");
 
-            String link = URL_LINK + "signup_user.php?email=" + email + "&name=" + name + "&password=" + password + "&mobile=" + mobile + "&user_type_id=" + user_type_id;
+            String link = URL_LINK + "signup_user.php?email=" + email + "&name=" + name + "&password=" + password + "&mobile=" + mobile + "&user_type=" + user_type;
             HttpGet httpGet = new HttpGet(link);
             httpClient.execute(httpGet);
         } catch (Exception e) {
@@ -85,7 +85,7 @@ public class DB {
             approx_weight = URLEncoder.encode(approx_weight, "utf-8");
             amount = URLEncoder.encode(amount, "utf-8");
             pic_name = URLEncoder.encode(pic_name, "utf-8");
-            user_email = "ankitrajput077@hotmaill.com";
+            user_email=URLEncoder.encode(user_email, "utf-8");
 
             String link = URL_LINK + "add_new_post.php?title=" + post_title + "&type=" + type_transport + "&weight=" + approx_weight + "&from=" + from_address + "&to=" + desti_address + "&amount=" + amount + "&selected_date=" + selected_date + "&pic_name=" + pic_name + "&email=" + user_email;
 
@@ -102,7 +102,7 @@ public class DB {
     }
     //////////////////////////////////transporter_sigup_data//////////////////////////////////////////////////////////
 
-    public static void signup_transporter(String email, String name, String password, String mobile) {
+    public static void signup_transporter(String email, String name, String password, String mobile, String user_type) {
         HttpClient httpClient = new DefaultHttpClient();
 
         StrictMode.setThreadPolicy(th);
@@ -113,7 +113,7 @@ public class DB {
             password=URLEncoder.encode(password,"UTF-8");
             mobile=URLEncoder.encode(mobile,"UTF-8");
 
-            String link = URL_LINK + "signup_transporter.php?email=" + email + "&name=" + name + "&password=" + password + "&mobile=" + mobile;
+            String link = URL_LINK + "signup_transporter.php?email=" + email + "&name=" + name + "&password=" + password + "&mobile=" + mobile + "user_type=" +user_type;
             HttpGet httpGet = new HttpGet(link);
 
             httpClient.execute(httpGet);
@@ -188,7 +188,6 @@ public class DB {
 
             HttpGet get2 = new HttpGet(URL_LINK + "check_email.php?email=" + email);
 
-
             HttpResponse httpResponse = httpClient.execute(get2);
             HttpEntity httpEntity = httpResponse.getEntity();
 
@@ -202,6 +201,7 @@ public class DB {
 
             while ((line = bufferedReader.readLine()) != null) {
                 builder.append(line + "\n");
+                //status=builder.toString();
             }
             String f = builder.toString();
 
@@ -211,6 +211,7 @@ public class DB {
 
             JSONObject jsonObject2 = jsonArray.getJSONObject(0);
             status = jsonObject2.optString("status").toString();
+
 
         } catch (Exception exception) {
             exception.printStackTrace();
