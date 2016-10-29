@@ -314,7 +314,6 @@ public class DB {
                 } else if (counter == 3) {
                     //arrayList.add();
                     userBean.setType(jsonObject2.optString("type").toString());
-
                     counter++;
                 } else if (counter == 4) {
                     //arrayList.add(jsonObject2.optString("weight").toString());
@@ -345,7 +344,7 @@ public class DB {
                     userBean = new UserBean();
 
                 }
-
+                System.out.println("userbean data================="+ userBean);
             }
 
 
@@ -474,6 +473,46 @@ public class DB {
             System.out.println("Error = " + e);
         }
     }
+    public static void get_all_transporter(){
+        HttpClient httpClient = new DefaultHttpClient();
+        StrictMode.setThreadPolicy(th);
 
+
+        try {
+            HttpGet link = new HttpGet(URL_LINK + "get_all_transporters.php");
+            HttpResponse httpResponse = httpClient.execute(link);
+
+            HttpEntity httpEntity = httpResponse.getEntity();
+
+            InputStream inputStream = httpEntity.getContent();
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+            StringBuilder builder = new StringBuilder();
+
+            String line = null;
+
+
+            while ((line = bufferedReader.readLine()) != null) {
+                builder.append(line + "\n");
+            }
+            String f = builder.toString();
+
+            JSONObject jsonObject = new JSONObject(f);
+            JSONArray jsonArray = jsonObject.optJSONArray("details");
+
+
+
+            for(int i=0; i < jsonArray.length();i++){
+                JSONObject jsonObject1= jsonArray.getJSONObject(i);
+
+
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            System.out.println("Exception here");
+        }
+
+    }
 
 }

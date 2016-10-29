@@ -63,7 +63,6 @@ public class ListOfPost extends AppCompatActivity {
         protected Void doInBackground(Void... JSONArray) {
 
 
-                System.out.println("Inside background");
                 arrayList = DB.get_Post_Data();
                 System.out.println(arrayList);
                 adapterUserList = new CustomAdapterPostList(ListOfPost.this, arrayList);

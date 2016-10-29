@@ -20,13 +20,13 @@ public class CustomAdapterPostList extends BaseAdapter {
 
     private Context context;
     UserBean userBean = new UserBean();
-    ArrayList arrayList = new java.util.ArrayList();
+    static ArrayList arrayList = new java.util.ArrayList();
 
     private ImageView imageProduct;
     private TextView textviewtitle;
     private TextView textviewservice;
-    static String IMAGE_URL = "http://conestoga.freeoda.com/LetsMove/images/";
-    static ArrayList<Bitmap> bitmapArray = new ArrayList<Bitmap>();;
+    static String IMAGE_URL = "http://www.sachinapatel.com/LetsMove/images/";
+    static ArrayList<Bitmap> bitmapArray = new ArrayList<Bitmap>();
 
     public CustomAdapterPostList(Context context, ArrayList arrayList) {
         // TODO Auto-generated constructor stub
@@ -73,28 +73,24 @@ public class CustomAdapterPostList extends BaseAdapter {
         userBean = (UserBean)arrayList.get(position);
 
         try {
-            URL url = new URL(IMAGE_URL+""+userBean.getPic_name());
-            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+      //      URL url = new URL(IMAGE_URL+""+userBean.getPic_name());
+      //      Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
 
 
-            bitmapArray.add(bmp); // Add a bitmap
+          //  ImageDownloaderTask.bitmapArrayList.add(ImageDownloaderTask.bmp); // Add a bitmap
          // Get first bitmap
 
-            imageProduct.setImageBitmap(bmp);
-
+            imageProduct.setImageBitmap((Bitmap) ImageDownloaderTask.bitmapArrayList.get(position));
 
           //  imageProduct.setImageResource(R.drawable.product1);
             textviewtitle.setText(userBean.getName());
             textviewservice.setText(userBean.getType());
-
 
         }
         catch (Exception e){
             System.out.println(e);
             e.printStackTrace();
         }
-
-
         return convertView;
     }
 }

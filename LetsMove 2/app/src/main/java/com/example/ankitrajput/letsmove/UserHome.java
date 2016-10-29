@@ -110,7 +110,17 @@ public class UserHome extends AppCompatActivity {
         three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UserHome.this, ListOfPost.class));
+                if(role_of_user.equals("u")){
+                    System.out.println("This is User");
+                    startActivity(new Intent(UserHome.this, ViewTransporters.class));
+
+                }
+                else if(role_of_user.equals("t"))
+                {
+                    System.out.println("This is transporter");
+                    startActivity(new Intent(UserHome.this, ListOfPost.class));
+                }
+
             }
         });
         four.setOnClickListener(new View.OnClickListener() {

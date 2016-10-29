@@ -45,7 +45,8 @@
         <activity android:name=".PostDetails" />
         <activity android:name=".ViewUserDetails" />
         <activity android:name=".ViewTransporterDetails" />
-        <activity android:name=".edit_user_details"></activity>
+        <activity android:name=".edit_user_details" />
+        <activity android:name=".ViewTransporters"></activity>
     </application>
 
 </manifest>
