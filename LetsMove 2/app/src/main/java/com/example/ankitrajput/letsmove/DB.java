@@ -454,6 +454,26 @@ public class DB {
         System.out.println("I am " + get_transporter_Email +","+ get_transporter_name);
     }
 
+    public static void edit_user(String New_name, String New_email, String New_password, String New_mobile, String email_session){
+        HttpClient httpClient = new DefaultHttpClient();
+
+        StrictMode.setThreadPolicy(th);
+
+        try {
+            New_name=URLEncoder.encode(New_name,"UTF-8");
+            New_email=URLEncoder.encode(New_email,"UTF-8");
+            New_password=URLEncoder.encode(New_password,"UTF-8");
+            New_mobile=URLEncoder.encode(New_mobile,"UTF-8");
+            email_session=URLEncoder.encode(email_session, "UTF-8");
+
+            String link = URL_LINK + "edit_user.php?new_email=" + New_email + "&new_name=" + New_name + "&new_password=" + New_password + "&new_mobile=" + New_mobile + "&current_user=" + email_session;
+            HttpGet httpGet = new HttpGet(link);
+
+            httpClient.execute(httpGet);
+        } catch (Exception e) {
+            System.out.println("Error = " + e);
+        }
+    }
 
 
 }
