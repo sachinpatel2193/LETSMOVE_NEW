@@ -47,13 +47,13 @@ public class DB {
     static String get_user_password = "";
     static String get_user_mobile = "";
 
-    static String get_transporter_name = "";
-    static String get_transporter_Email = "";
-    static String get_transporter_password = "";
-    static String get_transporter_phoneNumber = "";
     //static public final String URL_LINK = "http://10.0.2.2:8080/android/LetsMove/";
     static public final String URL_LINK = "http://www.sachinapatel.com/LetsMove/";
     static StrictMode.ThreadPolicy th = new StrictMode.ThreadPolicy.Builder().build();
+    static ArrayList transporterEmail = new ArrayList();
+    static ArrayList transporterName = new ArrayList();
+    static ArrayList transporterMobile = new ArrayList();
+
 
     ///////////////////////////////////send_user_signup_data_to_database_starts//////////////////////////////////////////
     public static void user_signup(String email, String name, String password, String mobile, String user_type) {
@@ -163,7 +163,9 @@ public class DB {
 
             status = jsonObject2.optString("status").toString();
             getname = jsonObject3.optString("name").toString();
-            getRole = jsonObject4.optString("role").toString();
+            getRole = jsonObject4.optString("user_type").toString();
+            System.out.println("My Role ======================" + getRole);
+
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -314,6 +316,7 @@ public class DB {
                 } else if (counter == 3) {
                     //arrayList.add();
                     userBean.setType(jsonObject2.optString("type").toString());
+
                     counter++;
                 } else if (counter == 4) {
                     //arrayList.add(jsonObject2.optString("weight").toString());
@@ -344,7 +347,7 @@ public class DB {
                     userBean = new UserBean();
 
                 }
-                System.out.println("userbean data================="+ userBean);
+
             }
 
 
@@ -414,7 +417,7 @@ public class DB {
 
 
         try {
-            HttpGet link = new HttpGet(URL_LINK + "get_transporter_profile.php?email=" + email);
+            HttpGet link = new HttpGet(URL_LINK + "get_all_transporters.php");
             HttpResponse httpResponse = httpClient.execute(link);
 
             HttpEntity httpEntity = httpResponse.getEntity();
@@ -433,25 +436,99 @@ public class DB {
             String f = builder.toString();
 
             JSONObject jsonObject = new JSONObject(f);
-            JSONArray jsonArray = jsonObject.optJSONArray("profile");
+            JSONArray jsonArray = jsonObject.optJSONArray("details");
+            int k = 1;
+            String get_transporter_detail = null;
 
-            System.out.println("For Loop");
-            JSONObject jsonObject2 = jsonArray.getJSONObject(0);
-            JSONObject jsonObject3 = jsonArray.getJSONObject(1);
-            JSONObject jsonObject4 = jsonArray.getJSONObject(2);
-            JSONObject jsonObject5 = jsonArray.getJSONObject(3);
 
-            get_transporter_name = jsonObject2.optString("name").toString();
-            get_transporter_Email= jsonObject3.optString("email").toString();
-            get_transporter_password=jsonObject4.optString("password").toString();
-            get_transporter_phoneNumber = jsonObject5.optString("mobile").toString();
+           for (int i = 0; i < jsonArray.length(); i++) {
+               JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+
+               JSONObject jsonObjectTrans = jsonArray.getJSONObject(i);
+
+               if(k == 1)
+               {
+                   get_transporter_detail= jsonObjectTrans.optString("email").toString();
+                   transporterEmail.add(get_transporter_detail);
+                    k++;
+               }
+               else if(k==2){
+                   get_transporter_detail = jsonObjectTrans.optString("name").toString();
+                    transporterName.add(get_transporter_detail);
+                    k++;
+               }
+               else if(k==3){
+                   get_transporter_detail = jsonObjectTrans.optString("name").toString();
+                    transporterMobile.add(get_transporter_detail);
+
+                   k=1;
+               }
+
+
+           }
 
         } catch (Exception exception) {
             exception.printStackTrace();
             System.out.println("Exception here");
         }
-        System.out.println("I am " + get_transporter_Email +","+ get_transporter_name);
     }
+
+    /////////////////////////////////////// get user details by id ///////////////////////////////////////////
+
+    public static void get_user_details_by_id(String user_id){
+
+
+        HttpClient httpClient = new DefaultHttpClient();
+        StrictMode.setThreadPolicy(th);
+
+
+        try {
+            HttpGet link = new HttpGet(URL_LINK + "get_user_by_id.php?id=" + user_id);
+            HttpResponse httpResponse = httpClient.execute(link);
+
+
+            HttpEntity httpEntity = httpResponse.getEntity();
+
+
+            InputStream inputStream = httpEntity.getContent();
+
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+            StringBuilder builder = new StringBuilder();
+
+
+            String line = null;
+
+
+            while ((line = bufferedReader.readLine()) != null) {
+                builder.append(line + "\n");
+            }
+            String f = builder.toString();
+
+
+            JSONObject jsonObject = new JSONObject(f);
+            JSONArray jsonArray = jsonObject.optJSONArray("profile");
+
+
+            System.out.println("For Loop");
+            JSONObject jsonObject2 = jsonArray.getJSONObject(0);
+            JSONObject jsonObject3 = jsonArray.getJSONObject(1);
+            JSONObject jsonObject4 = jsonArray.getJSONObject(2);
+
+
+            get_user_name = jsonObject2.optString("name").toString();
+            get_user_email= jsonObject3.optString("email").toString();
+            get_user_mobile = jsonObject4.optString("mobile").toString();
+
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            System.out.println("Exception here");
+        }
+        //System.out.println("I am " + get_user_email +","+ get_user_name);
+    }
+
+    ///////////////////////////////////////// edit user details /////////////////////////////////////////////
 
     public static void edit_user(String New_name, String New_email, String New_password, String New_mobile, String email_session){
         HttpClient httpClient = new DefaultHttpClient();
@@ -473,46 +550,6 @@ public class DB {
             System.out.println("Error = " + e);
         }
     }
-    public static void get_all_transporter(){
-        HttpClient httpClient = new DefaultHttpClient();
-        StrictMode.setThreadPolicy(th);
 
-
-        try {
-            HttpGet link = new HttpGet(URL_LINK + "get_all_transporters.php");
-            HttpResponse httpResponse = httpClient.execute(link);
-
-            HttpEntity httpEntity = httpResponse.getEntity();
-
-            InputStream inputStream = httpEntity.getContent();
-
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-            StringBuilder builder = new StringBuilder();
-
-            String line = null;
-
-
-            while ((line = bufferedReader.readLine()) != null) {
-                builder.append(line + "\n");
-            }
-            String f = builder.toString();
-
-            JSONObject jsonObject = new JSONObject(f);
-            JSONArray jsonArray = jsonObject.optJSONArray("details");
-
-
-
-            for(int i=0; i < jsonArray.length();i++){
-                JSONObject jsonObject1= jsonArray.getJSONObject(i);
-
-
-            }
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            System.out.println("Exception here");
-        }
-
-    }
 
 }

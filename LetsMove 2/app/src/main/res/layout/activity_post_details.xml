@@ -90,5 +90,92 @@
 
             android:textSize="15dp" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:text="Pickup Date :"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView11"
+                android:layout_alignLeft="@+id/textView11"
+                android:layout_alignStart="@+id/textView11"
+                android:layout_marginTop="28dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="20dp"
+                android:textSize="20dp"
+                android:id="@+id/pickup_date_id" />
+
+
+            <TextView
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:textSize="20dp"
+                android:id="@+id/pickup_date_view" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:text="Max Amount : CAD "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView11"
+                android:layout_alignLeft="@+id/textView11"
+                android:layout_alignStart="@+id/textView11"
+                android:layout_marginTop="28dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="20dp"
+                android:textSize="20dp"
+                android:id="@+id/max_amount_id" />
+
+
+            <TextView
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:textSize="20dp"
+                android:id="@+id/max_ammount_view" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:text="View User"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:id="@+id/view_user_of_post"/>
+
+            <Button
+                android:text="Bid on Post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:layout_marginLeft="130dp"
+                android:id="@+id/bid_on_post"/>
+
+
+        </LinearLayout>
     </LinearLayout>
+
+
 </ScrollView>

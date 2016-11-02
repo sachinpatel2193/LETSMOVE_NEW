@@ -57,13 +57,18 @@ public class UserHome extends AppCompatActivity {
 
         final SharedPreferences preferences_email = getSharedPreferences("login_data", MODE_PRIVATE);
         String email_session = preferences_email.getString("login_email", null);
+
         final String role_of_user = preferences_email.getString("role", null);
         String Login_name_facebook = preferences_email.getString("login_facebook_name", null);
+
 
         SharedPreferences preferences_name = getSharedPreferences("login_user_name", MODE_PRIVATE);
         String name_session = preferences_name.getString("login_name", null);
 
-        System.out.println("Role =======" + role_of_user);
+
+        SharedPreferences role_name = getSharedPreferences("user_role", MODE_PRIVATE);
+        final String UserRole = role_name.getString("role", null);
+        System.out.println("Role =======" + UserRole);
 
         if(name_session!=null) {
             textView_name.setText("Welcome " + name_session);
@@ -95,32 +100,18 @@ public class UserHome extends AppCompatActivity {
         two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(role_of_user.equals("u")){
-                    System.out.println("Going to user view");
                     startActivity(new Intent(UserHome.this, ViewUserDetails.class));
-
-                }
-                else if(role_of_user.equals("t"))
-                {
-                    System.out.println("Going to transporter view");
-                    startActivity(new Intent(UserHome.this, ViewTransporterDetails.class));
-                }
             }
         });
         three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(role_of_user.equals("u")){
-                    System.out.println("This is User");
-                    startActivity(new Intent(UserHome.this, ViewTransporters.class));
-
+                if(UserRole.equals("1")){
+                    startActivity(new Intent(UserHome.this, ViewTransporterDetails.class));
                 }
-                else if(role_of_user.equals("t"))
-                {
-                    System.out.println("This is transporter");
+                else {
                     startActivity(new Intent(UserHome.this, ListOfPost.class));
                 }
-
             }
         });
         four.setOnClickListener(new View.OnClickListener() {

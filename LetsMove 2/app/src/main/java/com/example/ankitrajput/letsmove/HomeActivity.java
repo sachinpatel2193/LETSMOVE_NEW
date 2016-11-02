@@ -11,11 +11,13 @@ import android.widget.ImageButton;
 public class HomeActivity extends AppCompatActivity {
 
     static Context context;
-
+    ImageDownloaderTask imageDownloaderTask = new ImageDownloaderTask();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        imageDownloaderTask.setBitMapImageMethod();
 
         context = HomeActivity.this;
         ImageButton first = (ImageButton)findViewById(R.id.first);

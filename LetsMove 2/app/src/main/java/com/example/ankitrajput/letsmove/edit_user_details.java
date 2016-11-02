@@ -1,14 +1,18 @@
 package com.example.ankitrajput.letsmove;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.provider.ContactsContract;
 import android.support.annotation.StringDef;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class edit_user_details extends AppCompatActivity {
 
@@ -85,9 +89,31 @@ public class edit_user_details extends AppCompatActivity {
                     new_mobile=edit_Mobile.getText().toString();
                 }
 
-                System.out.println("new data =======" + new_name + new_email + new_password + new_mobile);
+                AlertDialog.Builder builder = new AlertDialog.Builder(edit_user_details.this);
+                builder.setTitle("Are you sure? Do you want to Edit profile?");
 
-                DB.edit_user(new_name, new_email, new_password, new_mobile, email_session);
+                // Set up the buttons
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        DB.edit_user(new_name, new_email, new_password, new_mobile, email_session);
+
+                        Toast.makeText(edit_user_details.this, "Edited Successfully", Toast.LENGTH_SHORT).show();
+                        finish();
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        startActivity(new Intent(edit_user_details.this, ViewUserDetails.class));
+                    }
+                });
+                builder.show();
+
+
             }
         });
     }

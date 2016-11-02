@@ -73,16 +73,16 @@ public class CustomAdapterPostList extends BaseAdapter {
         userBean = (UserBean)arrayList.get(position);
 
         try {
-      //      URL url = new URL(IMAGE_URL+""+userBean.getPic_name());
-      //      Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            //      URL url = new URL(IMAGE_URL+""+userBean.getPic_name());
+            //      Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
 
 
-          //  ImageDownloaderTask.bitmapArrayList.add(ImageDownloaderTask.bmp); // Add a bitmap
-         // Get first bitmap
+            //  ImageDownloaderTask.bitmapArrayList.add(ImageDownloaderTask.bmp); // Add a bitmap
+            // Get first bitmap
 
             imageProduct.setImageBitmap((Bitmap) ImageDownloaderTask.bitmapArrayList.get(position));
 
-          //  imageProduct.setImageResource(R.drawable.product1);
+            //  imageProduct.setImageResource(R.drawable.product1);
             textviewtitle.setText(userBean.getName());
             textviewservice.setText(userBean.getType());
 

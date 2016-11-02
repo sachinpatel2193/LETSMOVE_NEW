@@ -141,8 +141,6 @@ public class UserLogin extends AppCompatActivity {
                         editor2.putString("login_name", name_facebook);
                         editor2.commit();
 
-
-
                         finish();
                         startActivity(new Intent(UserLogin.this, UserHome.class));
 
@@ -178,6 +176,14 @@ public class UserLogin extends AppCompatActivity {
                 String l_email = login_email.getText().toString();
                 String l_password = login_password.getText().toString();
 
+                String EMAIL_REGEX =
+                        "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                                + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                                + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                                + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+                Boolean b = l_email.matches(EMAIL_REGEX);
 
                 if (l_email.equals("") || l_password.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(UserLogin.this);
@@ -191,7 +197,21 @@ public class UserLogin extends AppCompatActivity {
                         }
                     });
                     builder.show();
-                } else {
+                }
+                else if (b == false) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(UserLogin.this);
+                    builder.setTitle("Inavalid Email ! Try Again");
+
+                    // Set up the buttons
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    builder.show();
+                }
+                else {
                     String status = DB.check_user(l_email, l_password);
 
                     if (status.equals("0")) {
@@ -211,8 +231,11 @@ public class UserLogin extends AppCompatActivity {
                     } else if(status.equals("1")){
                         SharedPreferences.Editor editor = getSharedPreferences("login_data", MODE_PRIVATE).edit();
                         editor.putString("login_email", l_email);
-                        editor.putString("role", DB.getRole);
                         editor.commit();
+
+                        SharedPreferences.Editor editor_role= getSharedPreferences("user_role", MODE_PRIVATE).edit();
+                        editor_role.putString("role", DB.getRole);
+                        editor_role.commit();
 
                         SharedPreferences.Editor editor2 = getSharedPreferences("login_user_name", MODE_PRIVATE).edit();
                         editor2.putString("login_name", DB.getname);

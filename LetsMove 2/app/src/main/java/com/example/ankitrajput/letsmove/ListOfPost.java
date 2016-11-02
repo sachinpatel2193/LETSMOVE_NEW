@@ -3,9 +3,11 @@ package com.example.ankitrajput.letsmove;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +17,9 @@ import android.widget.ListView;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.LinkedTransferQueue;
 
 public class ListOfPost extends AppCompatActivity {
@@ -27,12 +31,23 @@ public class ListOfPost extends AppCompatActivity {
     Context context;
     CustomAdapterPostList adapterUserList;
 
+    ImageDownloaderTask imageDownloaderTask = new ImageDownloaderTask();
+    @Override
+    public void onBackPressed() {
+
+      //  imageDownloaderTask.setBitMapImageMethod();
+
+        finish();
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setProgressBarVisibility(true);
 
+        imageDownloaderTask.setBitMapImageMethod();
         context = ListOfPost.this;
         progress = new ProgressDialog(ListOfPost.this);
         progress = ProgressDialog.show(this, "Loading...", "Please wait...");
@@ -41,11 +56,13 @@ public class ListOfPost extends AppCompatActivity {
         task.execute();
 
 
+
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     class Task extends AsyncTask<Void, Void, Void> {
 
+        ImageDownloaderTask imageDownloaderTask = new ImageDownloaderTask();
         Context context;
 
         public Task(Context context) {
@@ -63,9 +80,9 @@ public class ListOfPost extends AppCompatActivity {
         protected Void doInBackground(Void... JSONArray) {
 
 
-                arrayList = DB.get_Post_Data();
-                System.out.println(arrayList);
-                adapterUserList = new CustomAdapterPostList(ListOfPost.this, arrayList);
+            arrayList = DB.get_Post_Data();
+           // System.out.println(arrayList);
+            adapterUserList = new CustomAdapterPostList(ListOfPost.this, arrayList);
 
             return null;
         }
@@ -93,4 +110,5 @@ public class ListOfPost extends AppCompatActivity {
 
         }
     }
-}
+
+  }
