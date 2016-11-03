@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "238818192139",
+    "project_id": "firebase-letsmove"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238818192139:android:b6effbc91dde7cae",
+        "android_client_info": {
+          "package_name": "com.example.ankitrajput.letsmove"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238818192139-9jluen6nbgtr28vtnp59ueurram8hajt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ankitrajput.letsmove",
+            "certificate_hash": "05501A06CC49608ED5BC16D6B826D18C61769B38"
+          }
+        },
+        {
+          "client_id": "238818192139-kk44t41954mdv10otftkkdfrfo4gemsr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuc_YsmpAvoEhSFIKDvP5w0gHVNWL7zBM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 public class UserHome extends AppCompatActivity {
 
@@ -65,15 +68,23 @@ public class UserHome extends AppCompatActivity {
         SharedPreferences preferences_name = getSharedPreferences("login_user_name", MODE_PRIVATE);
         String name_session = preferences_name.getString("login_name", null);
 
+        SharedPreferences preferences_google = getSharedPreferences("login_user_name", MODE_PRIVATE);
+        String google_login_name= preferences_google.getString("login_google_name", null);
 
         SharedPreferences role_name = getSharedPreferences("user_role", MODE_PRIVATE);
         final String UserRole = role_name.getString("role", null);
         System.out.println("Role =======" + UserRole);
 
         if(name_session!=null) {
+            System.out.println("Session name --------------------");
             textView_name.setText("Welcome " + name_session);
         }
+        else if(google_login_name!=null){
+            textView_name.setText("Welcome " + google_login_name);
+            System.out.println("Google name --------------------");
+        }
         else {
+            System.out.println("Facebook Name ---------------------");
             textView_name.setText("Welcome " + Login_name_facebook);
         }
 
@@ -127,12 +138,23 @@ public class UserHome extends AppCompatActivity {
 
                         SharedPreferences sharedPreferences = getSharedPreferences("login_data",0);
                         sharedPreferences.edit().remove("login_email").commit();
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putBoolean("sign_in_with_google", true);
+                        editor.commit();
+
 
                         SharedPreferences sharedPreferences2 = getSharedPreferences("login_user_name",0);
                         sharedPreferences2.edit().remove("login_name").commit();
 
                         // Logout from facebook/////////////////////////////
                         LoginManager.getInstance().logOut();
+
+                        //Logout from Google //////////////////////////////
+                        if(UserLogin.mGoogleApiClient.isConnected() && UserLogin.mGoogleApiClient != null){
+                            //UserLogin.mGoogleApiClient.disconnect();
+                            Auth.GoogleSignInApi.signOut(UserLogin.mGoogleApiClient);
+                            System.out.println("user Logged out from the app");
+                        }
                         finish();
                         startActivity(new Intent(UserHome.this, HomeActivity.class));
                     }

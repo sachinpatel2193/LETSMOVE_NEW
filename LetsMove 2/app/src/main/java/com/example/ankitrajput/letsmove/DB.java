@@ -73,6 +73,8 @@ public class DB {
 
     ///////////////////////////////////send_user_signup_data_to_database_ends//////////////////////////////////////////
 
+    ///////////////////////////////////////send_new_post_data_to_database /////////////////////////////////////////////
+
     public static void user_new_post(String post_title, String type_transport, String approx_weight, String from_address, String desti_address, String amount, String pic_name, String selected_date, String user_email) {
         HttpClient httpClient = new DefaultHttpClient();
 
