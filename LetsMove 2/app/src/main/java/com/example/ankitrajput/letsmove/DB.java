@@ -36,7 +36,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DB {
     static String getname = "";
@@ -50,6 +52,7 @@ public class DB {
     static ArrayList transporterName ;
     static  ArrayList transporterMobile ;
     static ArrayList transporterEmail;
+    public static Map<String, String> user_info = new HashMap<String, String>();
 
     //static public final String URL_LINK = "http://10.0.2.2:8080/android/LetsMove/";
     static public final String URL_LINK = "http://www.sachinapatel.com/LetsMove/";
@@ -497,7 +500,7 @@ public class DB {
 
     /////////////////////////////////////// get user details by id ///////////////////////////////////////////
 
-    public static void get_user_details_by_id(String user_id){
+    public static Map<String, String> get_user_details_by_id(String user_id){
 
 
         HttpClient httpClient = new DefaultHttpClient();
@@ -537,10 +540,12 @@ public class DB {
             JSONObject jsonObject3 = jsonArray.getJSONObject(1);
             JSONObject jsonObject4 = jsonArray.getJSONObject(2);
 
+            for(int i=0; i<jsonArray.length();i++){
+                user_info.put("name",jsonObject2.optString("name").toString());
+                user_info.put("email",jsonObject3.optString("email").toString());
+                user_info.put("mobile",jsonObject4.optString("mobile").toString());
 
-            get_user_name = jsonObject2.optString("name").toString();
-            get_user_email= jsonObject3.optString("email").toString();
-            get_user_mobile = jsonObject4.optString("mobile").toString();
+            }
 
 
         } catch (Exception exception) {
@@ -548,6 +553,7 @@ public class DB {
             System.out.println("Exception here");
         }
         //System.out.println("I am " + get_user_email +","+ get_user_name);
+        return user_info;
     }
 
     ///////////////////////////////////////// edit user details /////////////////////////////////////////////

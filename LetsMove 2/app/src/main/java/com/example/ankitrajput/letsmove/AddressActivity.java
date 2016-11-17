@@ -2,9 +2,11 @@ package com.example.ankitrajput.letsmove;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -117,22 +119,39 @@ public class AddressActivity extends AppCompatActivity implements AdapterView.On
             @Override
             public void onClick(View v) {
 
-                f_add1 = add1_from.getText().toString();
-                f_add2 = add2_from.getText().toString();
-                f_city = city_from.getText().toString();
-                f_province = spinner_province_from.getSelectedItem().toString();
-                f_postalcode = postalcode_from.getText().toString();
+                    f_add1 = add1_from.getText().toString();
+                    f_add2 = add2_from.getText().toString();
+                    f_city = city_from.getText().toString();
+                    f_province = spinner_province_from.getSelectedItem().toString();
+                    f_postalcode = postalcode_from.getText().toString();
 
-                d_add1 = add1_destination.getText().toString();
-                d_add2 = add2_destination.getText().toString();
-                d_city = city_destination.getText().toString();
-                d_province = spinner_province_destination.getSelectedItem().toString();
-                d_postalcode = postalcode_destination.getText().toString();
-
-                TaskAddPost taskAddPost = new TaskAddPost();
-                taskAddPost.execute();
+                    d_add1 = add1_destination.getText().toString();
+                    d_add2 = add2_destination.getText().toString();
+                    d_city = city_destination.getText().toString();
+                    d_province = spinner_province_destination.getSelectedItem().toString();
+                    d_postalcode = postalcode_destination.getText().toString();
 
 
+                if(f_add1.isEmpty() || f_add2.isEmpty() || f_city.isEmpty() || f_province.isEmpty() || f_postalcode.isEmpty() || d_add1.isEmpty() || d_add2.isEmpty() || d_city.isEmpty() || d_province.isEmpty() || d_postalcode.isEmpty())
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddressActivity.this);
+
+                    builder.setMessage("One or Multiple field of Address can not be Empty!")
+                            .setCancelable(false)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // do things
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+                else {
+
+                    TaskAddPost taskAddPost = new TaskAddPost();
+                    taskAddPost.execute();
+                }
             }
         });
     }

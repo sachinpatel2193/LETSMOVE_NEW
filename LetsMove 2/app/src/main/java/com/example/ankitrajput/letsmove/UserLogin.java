@@ -147,13 +147,10 @@ public class UserLogin extends AppCompatActivity {
                         }
                         SharedPreferences.Editor editor = getSharedPreferences("login_data", MODE_PRIVATE).edit();
                         editor.putString("login_email", email_facebook);
+                        editor.putString("login_name", name_facebook);
                         editor.putString("user_id", DB.getId);
                         editor.putString("role", DB.getRole);
                         editor.commit();
-
-                        SharedPreferences.Editor editor2 = getSharedPreferences("login_user_name", MODE_PRIVATE).edit();
-                        editor2.putString("login_name", name_facebook);
-                        editor2.commit();
 
                         finish();
                         startActivity(new Intent(UserLogin.this, UserHome.class));
@@ -242,16 +239,10 @@ public class UserLogin extends AppCompatActivity {
                     } else if (status.equals("1")) {
                         SharedPreferences.Editor editor = getSharedPreferences("login_data", MODE_PRIVATE).edit();
                         editor.putString("login_email", l_email);
+                        editor.putString("login_name", DB.getname);
                         editor.putString("user_id", DB.getId);
+                        editor.putString("role", DB.getRole);
                         editor.commit();
-
-                        SharedPreferences.Editor editor_role = getSharedPreferences("user_role", MODE_PRIVATE).edit();
-                        editor_role.putString("role", DB.getRole);
-                        editor_role.commit();
-
-                        SharedPreferences.Editor editor2 = getSharedPreferences("login_user_name", MODE_PRIVATE).edit();
-                        editor2.putString("login_name", DB.getname);
-                        editor2.commit();
 
                         startActivity(new Intent(UserLogin.this, UserHome.class));
 
@@ -326,10 +317,9 @@ public class UserLogin extends AppCompatActivity {
             editor.putString("login_email", email_google);
             editor.putString("login_name", name_google);
             editor.putBoolean("sign_in_with_google", true);
+            editor.putString("user_id", DB.getId);
+            editor.putString("role", "1");
             editor.commit();
-
-            //SharedPreferences.Editor editor2 = getSharedPreferences("login_user_name", MODE_PRIVATE).edit();
-
 
             finish();
             startActivity(new Intent(UserLogin.this, UserHome.class));

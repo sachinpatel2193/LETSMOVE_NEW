@@ -21,6 +21,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 public class UserHome extends AppCompatActivity {
 
+    String UserRole= " ";
     @Override
     public void onBackPressed() {
 
@@ -61,29 +62,34 @@ public class UserHome extends AppCompatActivity {
         final SharedPreferences preferences_email = getSharedPreferences("login_data", MODE_PRIVATE);
         String email_session = preferences_email.getString("login_email", null);
         String google_login_name = preferences_email.getString("login_name", null);
+        UserRole = preferences_email.getString("role", null);
 
-        final String role_of_user = preferences_email.getString("role", null);
+
+        //final String role_of_user = preferences_email.getString("role", null);
         String Login_name_facebook = preferences_email.getString("login_facebook_name", null);
 
 
-        SharedPreferences preferences_name = getSharedPreferences("login_user_name", MODE_PRIVATE);
-        String name_session = preferences_name.getString("login_name", null);
+        //SharedPreferences preferences_name = getSharedPreferences("login_user_name", MODE_PRIVATE);
+        String name_session = preferences_email.getString("login_name", null);
 
-        /*SharedPreferences preferences_google = getSharedPreferences("login_user_name", MODE_PRIVATE);
-        String google_login_name= preferences_google.getString("login_google_name", null);*/
+        //SharedPreferences preferences_google = getSharedPreferences("login_user_name", MODE_PRIVATE);
+        //String google_login_name= preferences_google.getString("login_google_name", null);
 
-        SharedPreferences role_name = getSharedPreferences("user_role", MODE_PRIVATE);
-        final String UserRole = role_name.getString("role", null);
+        //SharedPreferences role_name = getSharedPreferences("user_role", MODE_PRIVATE);
+        //final String UserRole = role_name.getString("role", null);
 
         if(name_session!=null) {
+            System.out.println("user role ========== " + UserRole);
             System.out.println("Session name --------------------");
             textView_name.setText("Welcome " + name_session);
         }
         else if(google_login_name!=null){
+            System.out.println("user role ========== " + UserRole);
             textView_name.setText("Welcome " + google_login_name);
             System.out.println("Google name --------------------");
         }
         else {
+            System.out.println("user role ========== " + UserRole);
             System.out.println("Facebook Name ---------------------");
             textView_name.setText("Welcome " + Login_name_facebook);
         }

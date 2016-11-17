@@ -1,5 +1,7 @@
 package com.example.ankitrajput.letsmove;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,9 +12,12 @@ import android.icu.util.ULocale;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.TaskStackBuilder;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -23,9 +28,13 @@ import android.widget.Toast;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class PostDetails extends AppCompatActivity {
+
+    Map<String,String> user_info = new HashMap<String, String>();
 
     TextView postDetail_Name;
     ImageView postDetail_imageView;
@@ -80,16 +89,20 @@ public class PostDetails extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(PostDetails.this);
-                    builder.setMessage("Name: "+ DB.get_user_name + "\nEmail: "+ DB.get_user_email + "\nMobile: "+ DB.get_user_mobile)
+
+                    user_info = DB.get_user_details_by_id(userBean.getUser_id());
+
+                    builder.setMessage("Name: " + user_info.get("name") + "\nEmail: " + user_info.get("email") + "\nMobile: " + user_info.get("mobile"))
                             .setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener(){
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // do things
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // do things
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+
                 }
             });
 
@@ -106,6 +119,7 @@ public class PostDetails extends AppCompatActivity {
                         Toast.makeText(PostDetails.this,"Bid Done",Toast.LENGTH_SHORT).show();
                         finish();
                         startActivity(new Intent(PostDetails.this,ListOfPost.class));
+
                     }
                     else{
 

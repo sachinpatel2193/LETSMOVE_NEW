@@ -9,6 +9,7 @@ import android.support.v7.view.menu.ExpandedMenuView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,10 @@ public class ViewBids extends AppCompatActivity {
         String post_id = bundle.getString("post_id");
 
         final ArrayList arrayList = DB2.get_bid_detail(post_id);
+        if(arrayList.isEmpty()){
+            Toast.makeText(ViewBids.this, "There is no any Bids on your Posted Ad yet.", Toast.LENGTH_LONG).show();
+            finish();
+        }
         CustomAdapterViewBids customAdapterViewBids = new CustomAdapterViewBids(ViewBids.this,arrayList);
 
         listView.setAdapter(customAdapterViewBids);

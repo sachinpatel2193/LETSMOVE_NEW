@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -15,6 +16,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -157,6 +159,8 @@ public class NewPost extends Activity implements AdapterView.OnItemSelectedListe
             @Override
             public void onClick(View v) {
 
+
+
                     File f = new File(filePath);
                     post_title = edittext_post_title.getText().toString();
                     type_item = spinner.getSelectedItem().toString();
@@ -164,9 +168,25 @@ public class NewPost extends Activity implements AdapterView.OnItemSelectedListe
                     pic_name = f.getName();
                     pickup_Date = selected_Date;
                     max_amount = edittext_max_amount.getText().toString();
+                if(post_title.isEmpty() || type_item.isEmpty() || weight.isEmpty() || pic_name.isEmpty() || pickup_Date.isEmpty() || max_amount.isEmpty()){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(NewPost.this);
 
-                    System.out.println(post_title+"  "+type_item+" "+weight+" "+pic_name+" "+pickup_Date+" "+max_amount+"");
+                    builder.setMessage("One or Multiple field of Ad can not be Empty!")
+                            .setCancelable(false)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // do things
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                }
+                else {
+                    System.out.println(post_title + "  " + type_item + " " + weight + " " + pic_name + " " + pickup_Date + " " + max_amount + "");
                     startActivity(new Intent(NewPost.this, AddressActivity.class));
+                }
 
             }
         });
@@ -203,9 +223,9 @@ public class NewPost extends Activity implements AdapterView.OnItemSelectedListe
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new DatePickerDialog(NewPost.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                DatePickerDialog dpd = new DatePickerDialog(NewPost.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+                dpd.show();
+                dpd.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
 
             }
