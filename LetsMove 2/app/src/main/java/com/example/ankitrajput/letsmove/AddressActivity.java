@@ -62,7 +62,6 @@ public class AddressActivity extends AppCompatActivity implements AdapterView.On
         spinner_province_destination.setOnItemSelectedListener(this);
         new_post = (Button) findViewById(R.id.button_new_post);
 
-
         /////////////////////////////////////////set_spinner_province//////////////////////////////////////////
 
         List categories = new ArrayList();
@@ -89,7 +88,6 @@ public class AddressActivity extends AppCompatActivity implements AdapterView.On
         // attaching data adapter to spinner
         spinner_province_from.setAdapter(dataAdapter);
 
-
         List categories2 = new ArrayList();
         categories.add("Alberta");
         categories.add("British Columbia");
@@ -114,11 +112,9 @@ public class AddressActivity extends AppCompatActivity implements AdapterView.On
         // attaching data adapter to spinner
         spinner_province_destination.setAdapter(dataAdapter2);
 
-
         new_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                     f_add1 = add1_from.getText().toString();
                     f_add2 = add2_from.getText().toString();
                     f_city = city_from.getText().toString();
@@ -132,8 +128,12 @@ public class AddressActivity extends AppCompatActivity implements AdapterView.On
                     d_postalcode = postalcode_destination.getText().toString();
 
 
-                if(f_add1.isEmpty() || f_add2.isEmpty() || f_city.isEmpty() || f_province.isEmpty() || f_postalcode.isEmpty() || d_add1.isEmpty() || d_add2.isEmpty() || d_city.isEmpty() || d_province.isEmpty() || d_postalcode.isEmpty())
+                if(!f_add1.isEmpty() && !f_add2.isEmpty() && !f_city.isEmpty() && !f_province.isEmpty() && !f_postalcode.isEmpty() && !d_add1.isEmpty() && !d_add2.isEmpty() && !d_city.isEmpty() && !d_province.isEmpty() && !d_postalcode.isEmpty())
                 {
+                    TaskAddPost taskAddPost = new TaskAddPost();
+                    taskAddPost.execute();
+                }
+                else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(AddressActivity.this);
 
                     builder.setMessage("One or Multiple field of Address can not be Empty!")
@@ -146,11 +146,6 @@ public class AddressActivity extends AppCompatActivity implements AdapterView.On
                             });
                     AlertDialog alert = builder.create();
                     alert.show();
-                }
-                else {
-
-                    TaskAddPost taskAddPost = new TaskAddPost();
-                    taskAddPost.execute();
                 }
             }
         });

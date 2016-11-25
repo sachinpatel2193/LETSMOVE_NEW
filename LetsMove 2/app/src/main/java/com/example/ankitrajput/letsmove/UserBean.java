@@ -5,7 +5,19 @@ package com.example.ankitrajput.letsmove;
  */
 
 public class UserBean {
-     String post_id, user_id, name , type, weight, from_address, to_address, pic_name, max_amount, pickup_date;
+     String post_id;
+    String user_id;
+    String name;
+    String type;
+    String weight;
+    String from_address;
+    String to_address;
+    String pic_name;
+    String max_amount;
+    String pickup_date;
+    String status;
+
+
 
     public String getPost_id() { return post_id; }
 
@@ -55,6 +67,8 @@ public class UserBean {
         this.max_amount = max_amount;
     }
 
+    public void setStatus(String status) { this.status = status; }
+
     public String getType() {
         return type;
     }
@@ -82,4 +96,6 @@ public class UserBean {
     public String getPickup_date() {
         return pickup_date;
     }
+
+    public String getStatus() { return status; }
 }

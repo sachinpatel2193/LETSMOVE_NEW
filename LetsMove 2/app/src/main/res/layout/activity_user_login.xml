@@ -7,6 +7,7 @@
     <LinearLayout
         android:id="@+id/activity_user_login"
         android:layout_width="match_parent"
+        android:layout_margin="15dp"
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical"
         android:gravity="center"
@@ -57,8 +58,7 @@
 
                 <Button
                     android:id="@+id/button_loginuser"
-                    style="@style/cstmbtn"
-                    android:layout_width="match_parent"
+                    android:layout_width="193dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="30dp"
@@ -70,8 +70,10 @@
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button_facebook"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_width="192dp"
+                android:layout_height="70dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="20dp" />
 

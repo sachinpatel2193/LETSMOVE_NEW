@@ -1,8 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/back2">
+    android:layout_height="fill_parent">
 
     <RelativeLayout
         android:id="@+id/r1"
@@ -84,7 +83,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="#FA6330"
+                android:gravity="center"
+                android:drawableLeft="@drawable/selectimage"
+                android:layout_gravity="center"
+                android:paddingLeft="105dp"
+                android:paddingRight="100dp"
                 android:text="Upload Pic" />
 
             <Button
@@ -92,7 +95,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="#FA6330"
+                android:gravity="center"
+                android:drawableLeft="@drawable/selectdate"
+                android:layout_gravity="center"
+                android:paddingLeft="105dp"
+                android:paddingRight="95dp"
                 android:text="Pickup date" />
 
             <LinearLayout
@@ -114,7 +121,7 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="CAD" />
+                    android:text="$" />
             </LinearLayout>
 
             <Button
@@ -125,8 +132,12 @@
                 android:background="#426ef4"
                 android:text="Next"
                 android:textColor="#ffffff"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:drawableLeft="@drawable/nextpagewhite"
                 android:textSize="25dp"
-
+                android:paddingLeft="115dp"
+                android:paddingRight="110dp"
                 />
 
 

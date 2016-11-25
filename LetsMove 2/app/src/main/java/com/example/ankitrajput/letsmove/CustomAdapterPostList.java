@@ -3,6 +3,7 @@ package com.example.ankitrajput.letsmove;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ public class CustomAdapterPostList extends BaseAdapter {
     private ImageView imageProduct;
     private TextView textviewtitle;
     private TextView textviewservice;
+    private TextView show_status;
     static String IMAGE_URL = "http://www.sachinapatel.com/LetsMove/images/";
     static ArrayList<Bitmap> bitmapArray = new ArrayList<Bitmap>();
 
@@ -75,6 +77,7 @@ public class CustomAdapterPostList extends BaseAdapter {
         imageProduct = (ImageView) convertView.findViewById(R.id.imageView_cutom_layout_post);
         textviewtitle = (TextView) convertView.findViewById(R.id.textView_post_title);
         textviewservice = (TextView) convertView.findViewById(R.id.textView_product_type);
+        show_status = (TextView) convertView.findViewById(R.id.status_show);
         userBean = (UserBean) arrayList.get(position);
 
         System.out.println("Newwww   = = =   " + userBean.getPic_name() + "   " + userBean.getName());
@@ -97,11 +100,17 @@ public class CustomAdapterPostList extends BaseAdapter {
                 String post_user_id = userBean.getUser_id();
 
                 //System.out.println("lllll == " + ListOfPost.user_id + " // " + post_user_id);
+                System.out.println(userBean.getStatus());
+                if(userBean.getStatus().equals("0")){
+                    show_status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.submitbtn,0,0,0);
+                }
+
                 imageProduct.setImageBitmap((Bitmap) ImageDownloaderTask.bitmapArrayList.get(position));
 
                 //  imageProduct.setImageResource(R.drawable.product1);
                 textviewtitle.setText(userBean.getName());
                 textviewservice.setText(userBean.getType());
+
             } catch (Exception e) {
                 System.out.println(e);
                 e.printStackTrace();

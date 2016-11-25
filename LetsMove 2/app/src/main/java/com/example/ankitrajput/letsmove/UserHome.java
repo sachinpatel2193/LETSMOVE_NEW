@@ -21,7 +21,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 public class UserHome extends AppCompatActivity {
 
-    String UserRole= " ";
+    String UserRole = " ";
+
     @Override
     public void onBackPressed() {
 
@@ -53,11 +54,11 @@ public class UserHome extends AppCompatActivity {
         setContentView(R.layout.activity_user_home);
 
 
-        ImageButton one = (ImageButton)findViewById(R.id.one);
-        ImageButton two = (ImageButton)findViewById(R.id.two);
-        ImageButton three = (ImageButton)findViewById(R.id.three);
-        ImageButton four = (ImageButton)findViewById(R.id.four);
-        TextView textView_name = (TextView)findViewById(R.id.welcome_user_textview);
+        ImageButton one = (ImageButton) findViewById(R.id.one);
+        ImageButton two = (ImageButton) findViewById(R.id.two);
+        ImageButton three = (ImageButton) findViewById(R.id.three);
+        ImageButton four = (ImageButton) findViewById(R.id.four);
+        TextView textView_name = (TextView) findViewById(R.id.welcome_user_textview);
 
         final SharedPreferences preferences_email = getSharedPreferences("login_data", MODE_PRIVATE);
         String email_session = preferences_email.getString("login_email", null);
@@ -78,25 +79,23 @@ public class UserHome extends AppCompatActivity {
         //SharedPreferences role_name = getSharedPreferences("user_role", MODE_PRIVATE);
         //final String UserRole = role_name.getString("role", null);
 
-        if(name_session!=null) {
+        if (name_session != null) {
             System.out.println("user role ========== " + UserRole);
             System.out.println("Session name --------------------");
             textView_name.setText("Welcome " + name_session);
-        }
-        else if(google_login_name!=null){
+        } else if (google_login_name != null) {
             System.out.println("user role ========== " + UserRole);
             textView_name.setText("Welcome " + google_login_name);
             System.out.println("Google name --------------------");
-        }
-        else {
+        } else {
             System.out.println("user role ========== " + UserRole);
             System.out.println("Facebook Name ---------------------");
             textView_name.setText("Welcome " + Login_name_facebook);
         }
 
 
-        if(UserRole.equals("2")){
-        //This is to set images for transporter
+        if (UserRole.equals("2")) {
+            //This is to set images for transporter
             one.setImageResource(R.drawable.mybids);
             three.setImageResource(R.drawable.posts);
         }
@@ -108,33 +107,36 @@ public class UserHome extends AppCompatActivity {
         //////////////////////////////////////////////////////////////////////
         height = height - 500;
 
-        one.getLayoutParams().height=height/2;
-        two.getLayoutParams().height=height/2;
-        three.getLayoutParams().height=height/2;
-        four.getLayoutParams().height=height/2;
+        one.getLayoutParams().height = height / 2;
+        two.getLayoutParams().height = height / 2;
+        three.getLayoutParams().height = height / 2;
+        four.getLayoutParams().height = height / 2;
 
 
         one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UserHome.this, NewPost.class));
+                if (UserRole.equals("1")) {
+                    startActivity(new Intent(UserHome.this, NewPost.class));
+                } else {
+                    startActivity(new Intent(UserHome.this, MyBids.class));
+                }
             }
         });
         two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    startActivity(new Intent(UserHome.this, ViewUserDetails.class));
+                startActivity(new Intent(UserHome.this, ViewUserDetails.class));
             }
         });
         three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(UserRole.equals("1")){
+                if (UserRole.equals("1")) {
                     startActivity(new Intent(UserHome.this, ViewTransporterDetails.class));
-                }
-                else {
-                    Intent intent = new Intent(UserHome.this , ListOfPost.class);
-                    intent.putExtra("posts","all_posts");
+                } else {
+                    Intent intent = new Intent(UserHome.this, ListOfPost.class);
+                    intent.putExtra("posts", "all_posts");
                     startActivity(intent);
                 }
             }
@@ -150,14 +152,14 @@ public class UserHome extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        SharedPreferences sharedPreferences = getSharedPreferences("login_data",0);
+                        SharedPreferences sharedPreferences = getSharedPreferences("login_data", 0);
                         sharedPreferences.edit().remove("login_email").commit();
-                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putBoolean("sign_in_with_google", true);
                         editor.commit();
 
 
-                        SharedPreferences sharedPreferences2 = getSharedPreferences("login_user_name",0);
+                        SharedPreferences sharedPreferences2 = getSharedPreferences("login_user_name", 0);
                         sharedPreferences2.edit().remove("login_name").commit();
 
                         // Logout from facebook/////////////////////////////
@@ -165,9 +167,9 @@ public class UserHome extends AppCompatActivity {
 
                         //Logout from Google //////////////////////////////
                         //if(UserLogin.mGoogleApiClient.isConnected() && UserLogin.mGoogleApiClient != null){
-                            //UserLogin.mGoogleApiClient.disconnect();
-                            //Auth.GoogleSignInApi.signOut(UserLogin.mGoogleApiClient);
-                            System.out.println("user Logged out from the app");
+                        //UserLogin.mGoogleApiClient.disconnect();
+                        //Auth.GoogleSignInApi.signOut(UserLogin.mGoogleApiClient);
+                        System.out.println("user Logged out from the app");
                         //}
                         finish();
                         startActivity(new Intent(UserHome.this, HomeActivity.class));

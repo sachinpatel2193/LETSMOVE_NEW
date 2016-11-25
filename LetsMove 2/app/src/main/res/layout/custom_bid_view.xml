@@ -5,16 +5,92 @@
 
 
     <TextView
+        android:text="Description:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/view_bid_amount_label"
+        android:layout_alignLeft="@+id/view_bids_transporter_bid_description"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
 
         android:text="Description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="31dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/view_bids_transporter_bid_description"
         android:layout_below="@+id/view_bids_transporter_bid_amount"
         android:layout_alignLeft="@+id/view_bids_transporter_name"
         android:layout_alignStart="@+id/view_bids_transporter_name"
+        android:layout_marginLeft="50dp"
         android:textSize="18sp" />
+
+    <TextView
+        android:text="Review:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/view_bid_name_label"
+        android:layout_alignLeft="@+id/view_bids_transporter_reviews"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/view_bid_review_label"/>
+
+    <TextView
+
+        android:text="Transporter Review"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:id="@+id/view_bids_transporter_reviews"
+        android:layout_below="@+id/view_bids_transporter_name"
+        android:layout_alignLeft="@+id/view_bids_transporter_name"
+        android:layout_alignStart="@+id/view_bids_transporter_name"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:text="Amount:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/view_bid_review_label"
+        android:layout_alignLeft="@+id/view_bids_transporter_bid_amount"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/view_bid_amount_label"/>
+
+    <TextView
+
+        android:text="Bid Amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:id="@+id/view_bids_transporter_bid_amount"
+        android:layout_below="@+id/view_bids_transporter_reviews"
+        android:layout_alignLeft="@+id/view_bids_transporter_reviews"
+        android:layout_alignStart="@+id/view_bids_transporter_reviews"
+        android:layout_marginLeft="10dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:text="Name:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignLeft="@+id/view_bids_transporter_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@id/view_bid_name_label"/>
 
     <TextView
         android:text="Transporter Name"
@@ -26,29 +102,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="28dp"
-        android:layout_marginStart="28dp" />
+        android:layout_marginLeft="70dp"
+        android:layout_marginStart="70dp" />
 
-    <TextView
 
-        android:text="Transporter Review"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:id="@+id/view_bids_transporter_reviews"
-        android:layout_below="@+id/view_bids_transporter_name"
-        android:layout_alignLeft="@+id/view_bids_transporter_name"
-        android:layout_alignStart="@+id/view_bids_transporter_name" />
-
-    <TextView
-
-        android:text="Bid Amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:id="@+id/view_bids_transporter_bid_amount"
-        android:layout_below="@+id/view_bids_transporter_reviews"
-        android:layout_alignLeft="@+id/view_bids_transporter_reviews"
-        android:layout_alignStart="@+id/view_bids_transporter_reviews"
-        android:textSize="20sp" />
 </RelativeLayout>

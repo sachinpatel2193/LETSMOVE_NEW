@@ -1,8 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/back2">
+    android:layout_height="fill_parent">
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -182,10 +181,12 @@
 
                 <Button
                     android:id="@+id/button_new_post"
-                    style="@style/cstmbtn"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Post" />
+                    android:text="Post"
+                    android:drawableLeft="@drawable/submitbtn"
+                    android:paddingLeft="130dp"
+                    android:paddingRight="120dp"/>
 
 
             </LinearLayout>

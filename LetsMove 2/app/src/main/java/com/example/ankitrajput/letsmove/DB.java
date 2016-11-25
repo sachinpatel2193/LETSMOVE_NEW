@@ -49,9 +49,13 @@ public class DB {
     static String get_user_password = "";
     static String get_user_mobile = "";
 
+    public static String Post_id, User_poster_id, User_bidder_id, Bid_Amount, Bid_Description;
+
     static ArrayList transporterName ;
     static  ArrayList transporterMobile ;
     static ArrayList transporterEmail;
+    static ArrayList transporterId;
+
     public static Map<String, String> user_info = new HashMap<String, String>();
 
     //static public final String URL_LINK = "http://10.0.2.2:8080/android/LetsMove/";
@@ -436,6 +440,7 @@ public class DB {
          transporterEmail = new ArrayList();
          transporterName = new ArrayList();
          transporterMobile = new ArrayList();
+        transporterId = new ArrayList();
 
         HttpClient httpClient = new DefaultHttpClient();
         StrictMode.setThreadPolicy(th);
@@ -485,8 +490,12 @@ public class DB {
                else if(k==3){
                    get_transporter_detail = jsonObjectTrans.optString("mobile").toString();
                     transporterMobile.add(get_transporter_detail);
-
-                   k=1;
+                   k++;
+               }
+               else if(k==4){
+                    get_transporter_detail = jsonObjectTrans.optString("id").toString();
+                   transporterId.add(get_transporter_detail);
+                    k=1;
                }
 
 
@@ -580,27 +589,38 @@ public class DB {
     }
 
     ///////////////////////////////////// Send Bid Data ///////////////////////////////////
-    public static void send_bid_info(String post_id, String user_bidder_id, String bid_amount, String bid_description){
+    public static void send_bid_info(String post_id, String user_poster_id, String user_bidder_id, String bid_amount, String bid_description){
         HttpClient httpClient = new DefaultHttpClient();
         StrictMode.setThreadPolicy(th);
-        int Post_id=0;
-        int User_bidder_id=0;
+        //int Post_id;
+        //int User_bidder_id;
+        //int User_poster_id;
         try{
-            Post_id=Integer.parseInt(post_id);
-            User_bidder_id=Integer.parseInt(user_bidder_id);
+            //Post_id=Integer.parseInt(post_id);
+            //User_bidder_id=Integer.parseInt(user_bidder_id);
+            //User_poster_id=Integer.parseInt(user_poster_id);
             //Post_id=URLEncoder.encode(Post_id, "UTF-8");
             //User_bidder_id = URLEncoder.encode(User_bidder_id, "UTF-8");
             bid_amount = URLEncoder.encode(bid_amount, "UTF-8");
             bid_description = URLEncoder.encode(bid_description, "UTF-8");
 
-            String link=URL_LINK + "add_new_bid.php?post_id=" + Post_id + "&user_bidder_id=" + User_bidder_id + "&bid_amount=" + bid_amount + "&bid_description=" + bid_description;
+            String link=URL_LINK + "add_new_bid.php?post_id=" + post_id + "&user_poster_id=" + user_poster_id + "&user_bidder_id=" + user_bidder_id + "&bid_amount=" + bid_amount + "&bid_description=" + bid_description;
+            System.out.println(URL_LINK + "add_new_bid.php?post_id=" + post_id + "&user_poster_id=" + user_poster_id + "&user_bidder_id=" + user_bidder_id + "&bid_amount=" + bid_amount + "&bid_description=" + bid_description);
+
             HttpGet httpGet = new HttpGet(link);
 
             httpClient.execute(httpGet);
+            Post_id = post_id;
+            User_poster_id = user_poster_id;
+            User_bidder_id = user_bidder_id;
+            Bid_Amount = bid_amount;
+            Bid_Description = bid_description;
+
         }
         catch(Exception e)
         {
             System.out.println("Error when sending bid data=" + e);
+            e.printStackTrace();
         }
     }
 

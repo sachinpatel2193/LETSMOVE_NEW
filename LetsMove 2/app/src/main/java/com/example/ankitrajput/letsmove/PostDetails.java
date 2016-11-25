@@ -3,16 +3,20 @@ package com.example.ankitrajput.letsmove;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.icu.util.ULocale;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.TaskStackBuilder;
@@ -48,6 +52,7 @@ public class PostDetails extends AppCompatActivity {
     EditText bid_description;
     String clickedListPosition;
     String pos1;
+    String user_poster_id;
 
     static UserBean userBean = new UserBean();
     ArrayList<Bitmap> arrayListBitmap = new ArrayList<Bitmap>();
@@ -80,6 +85,8 @@ public class PostDetails extends AppCompatActivity {
         bid_for_post = (Button) findViewById(R.id.bid_on_post);
 
 
+
+
         // userBean = (UserBean) ListOfPost.arrayList.get(ListOfPost.clickedList);
         /////////////////////
         if(pos1.equals("all")){
@@ -91,6 +98,7 @@ public class PostDetails extends AppCompatActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(PostDetails.this);
 
                     user_info = DB.get_user_details_by_id(userBean.getUser_id());
+
 
                     builder.setMessage("Name: " + user_info.get("name") + "\nEmail: " + user_info.get("email") + "\nMobile: " + user_info.get("mobile"))
                             .setCancelable(false)
@@ -111,15 +119,32 @@ public class PostDetails extends AppCompatActivity {
                 public void onClick(View v) {
 
                     if(bid_for_post.getText().toString().equals("Done")){
+                        user_poster_id = userBean.getUser_id();
+
+                        System.out.println("IDs =================" + user_poster_id + DB.getId);
 
                         String bidAmount = bid_amount.getText().toString();
                         String bidDescription = bid_description.getText().toString();
-                        DB.send_bid_info(userBean.post_id, DB.getId, bidAmount, bidDescription);
+                        if(!bidAmount.isEmpty() && !bidDescription.isEmpty()){
+                            DB.send_bid_info(userBean.post_id, user_poster_id, DB.getId, bidAmount, bidDescription);
+                            Toast.makeText(PostDetails.this,"Bid Done",Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(new Intent(PostDetails.this,ListOfPost.class));
+                        }
+                        else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(PostDetails.this);
 
-                        Toast.makeText(PostDetails.this,"Bid Done",Toast.LENGTH_SHORT).show();
-                        finish();
-                        startActivity(new Intent(PostDetails.this,ListOfPost.class));
-
+                            builder.setMessage("One or Two fields for the Bid can not be Empty!")
+                                    .setCancelable(false)
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // do things
+                                            dialog.cancel();
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        }
                     }
                     else{
 
@@ -137,26 +162,41 @@ public class PostDetails extends AppCompatActivity {
 
         else{
             userBean = (UserBean) MyPostsActivity.arrayList.get(clickedListPosition2);
+            if(userBean.getStatus().equals("0")){
+                view_user_details_of_post.setText("View Details");
 
-            view_user_details_of_post.setText("Edit");
-            bid_for_post.setText("View Bids");
+                Drawable listlogo = getResources().getDrawable(R.drawable.list);
+                view_user_details_of_post.setCompoundDrawablesWithIntrinsicBounds(listlogo, null, null, null);
+                bid_for_post.setVisibility(View.GONE);
 
-            view_user_details_of_post.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent(PostDetails.this, EditPost.class));
-                }
-            });
+            }
+            else {
+                view_user_details_of_post.setText("Edit");
+                Drawable editlogo = getResources().getDrawable(R.drawable.editbtn);
+                view_user_details_of_post.setCompoundDrawablesWithIntrinsicBounds(editlogo, null, null, null);
 
-            System.out.println("bbbbb  === = "+userBean.getPost_id());
-            bid_for_post.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(PostDetails.this, ViewBids.class);
-                    intent.putExtra("post_id",userBean.getPost_id());
-                    startActivity(intent);
-                }
-            });
+
+                bid_for_post.setText("View Bids");
+                Drawable listlogo = getResources().getDrawable(R.drawable.list);
+                bid_for_post.setCompoundDrawablesWithIntrinsicBounds(listlogo, null, null, null);
+
+                view_user_details_of_post.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(PostDetails.this, EditPost.class));
+                    }
+                });
+
+                System.out.println("bbbbb  === = " + userBean.getPost_id());
+                bid_for_post.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(PostDetails.this, ViewBids.class);
+                        intent.putExtra("post_id", userBean.getPost_id());
+                        startActivity(intent);
+                    }
+                });
+            }
         }
 
         postDetail_Name.setText(userBean.getName());
@@ -175,7 +215,39 @@ public class PostDetails extends AppCompatActivity {
         /////////////////method to visible the bid options and make the bid on post
 
     }
+    /*public void addBidNotification() {
+        android.support.v4.app.NotificationCompat.Builder builder =
+                new android.support.v4.app.NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.logo)
+                        .setContentTitle("Transporter did bid on your post.")
+                        .setContentText("Check it by click here.");
 
+        Intent notificationIntent = new Intent(this, ViewBids.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentIntent);
+
+        // Add as notification
+        NotificationManager manager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
+        manager.notify(0, builder.build());
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    protected void onResume() { // TODO Auto-generated method stub
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("data"));
+
+    }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String num = intent.getStringExtra("data");
+            addBidNotification();
+        }
+
+    };*/
 
 }
 

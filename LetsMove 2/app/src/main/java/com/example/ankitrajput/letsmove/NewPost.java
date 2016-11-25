@@ -98,6 +98,8 @@ public class NewPost extends Activity implements AdapterView.OnItemSelectedListe
     static  String filePath;
     String imagePath;
     Button btn_choose_pic;
+    Boolean selectedDate=false;
+    Boolean btnforImage=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,42 +157,7 @@ public class NewPost extends Activity implements AdapterView.OnItemSelectedListe
         categories2.add("> 350 lb");
 
 
-        btn_post_new.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-
-                    File f = new File(filePath);
-                    post_title = edittext_post_title.getText().toString();
-                    type_item = spinner.getSelectedItem().toString();
-                    weight = spinner2.getSelectedItem().toString();
-                    pic_name = f.getName();
-                    pickup_Date = selected_Date;
-                    max_amount = edittext_max_amount.getText().toString();
-                if(post_title.isEmpty() || type_item.isEmpty() || weight.isEmpty() || pic_name.isEmpty() || pickup_Date.isEmpty() || max_amount.isEmpty()){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(NewPost.this);
-
-                    builder.setMessage("One or Multiple field of Ad can not be Empty!")
-                            .setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // do things
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-                else {
-                    System.out.println(post_title + "  " + type_item + " " + weight + " " + pic_name + " " + pickup_Date + " " + max_amount + "");
-                    startActivity(new Intent(NewPost.this, AddressActivity.class));
-                }
-
-            }
-        });
-        /////////////
 
         ///////////////////////////////////////////////////////////spinner_creating_code///////////////////////////////////
         // Creating adapter for spinner
@@ -223,6 +190,7 @@ public class NewPost extends Activity implements AdapterView.OnItemSelectedListe
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
+                selectedDate=true;
                 DatePickerDialog dpd = new DatePickerDialog(NewPost.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
                 dpd.show();
                 dpd.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
@@ -236,12 +204,49 @@ public class NewPost extends Activity implements AdapterView.OnItemSelectedListe
         btn_choose_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnforImage=true;
                 Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, 1);
             }
         });
 
         //////////////////////upload_image_ends/////////////////////////////////////////////////////
+
+
+        btn_post_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                File f = new File(filePath);
+                post_title = edittext_post_title.getText().toString();
+                type_item = spinner.getSelectedItem().toString();
+                weight = spinner2.getSelectedItem().toString();
+                pic_name = f.getName();
+                pickup_Date = selected_Date;
+                max_amount = edittext_max_amount.getText().toString();
+                if(!post_title.isEmpty() && !type_item.isEmpty() && !weight.isEmpty() && !pic_name.isEmpty() && !pickup_Date.isEmpty() && !max_amount.isEmpty()){
+                    if(selectedDate) {
+                        if(btnforImage) {
+                            System.out.println(post_title + "  " + type_item + " " + weight + " " + pic_name + " " + pickup_Date + " " + max_amount + "");
+                            startActivity(new Intent(NewPost.this, AddressActivity.class));
+                        }
+                    }
+                }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(NewPost.this);
+                    builder.setMessage("One or Multiple field of New Post can not be Empty!")
+                            .setCancelable(false)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // do things
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            }
+        });
     }
 
     private void updateLabel() {
@@ -253,7 +258,6 @@ public class NewPost extends Activity implements AdapterView.OnItemSelectedListe
         selected_Date = sdf.format(myCalendar.getTime());
         btn_setDate.setText(selected_Date);
     }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -300,8 +304,6 @@ public class NewPost extends Activity implements AdapterView.OnItemSelectedListe
         //  btn_setDate.setText(new StringBuilder().append(day).append("/").append(month).append("/").append(year));
     }
 
-
-
     public String getPath(Uri uri) {
         String[] projection = {MediaStore.MediaColumns.DATA};
         Cursor cursor = managedQuery(uri, projection, null, null, null);
@@ -342,6 +344,5 @@ public class NewPost extends Activity implements AdapterView.OnItemSelectedListe
                 }
         }
     }
+
 }
-
-

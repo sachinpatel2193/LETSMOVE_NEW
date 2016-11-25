@@ -2,6 +2,7 @@ package com.example.ankitrajput.letsmove;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
@@ -37,7 +38,7 @@ public class ViewTransporterDetails extends AppCompatActivity {
 
         listview_transporters.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ViewTransporterDetails.this);
                 builder.setMessage("Name: " + DB.transporterName.get(position) + "\nEmail: " + DB.transporterEmail.get(position) + "\nMobile: " + DB.transporterMobile.get(position))
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -46,7 +47,17 @@ public class ViewTransporterDetails extends AppCompatActivity {
                                 dialog.cancel();
                             }
                         });
+
                 AlertDialog alert = builder.create();
+                alert.setButton(AlertDialog.BUTTON_NEUTRAL, "Rate this Transporter", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(ViewTransporterDetails.this, add_ratings.class);
+                        intent.putExtra("Transporter Name",DB.transporterName.get(position).toString());
+                        intent.putExtra("Transporter Id", DB.transporterId.get(position).toString());
+                        startActivity(intent);
+                    }
+                });
                 alert.show();
             }
         });

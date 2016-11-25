@@ -3,6 +3,7 @@ package com.example.ankitrajput.letsmove;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
 
+import org.apache.commons.codec.Encoder;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -16,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;
+import java.security.spec.EncodedKeySpec;
 import java.util.ArrayList;
 
 public class DB2 {
@@ -102,6 +104,9 @@ public class DB2 {
                 } else if (counter == 10) {
                     //arrayList.add(jsonObject2.optString("pickup_date").toString());
                     userBean.setMax_amount(jsonObject2.optString("max_amount").toString());
+                    counter++;
+                } else if(counter==11) {
+                    userBean.setStatus(jsonObject2.optString("status").toString());
                     counter = 1;
                     arrayList.add(userBean);
                     userBean = new UserBean();
@@ -248,6 +253,101 @@ public class DB2 {
         }
         catch (Exception e){
 
+        }
+    }
+
+    //To show their own bid list to transporters
+    public static ArrayList myBids(String transporter_id){
+
+        HttpClient httpClient = new DefaultHttpClient();
+        StrictMode.setThreadPolicy(th);
+
+        ArrayList arrayList = new ArrayList();
+        String status = null;
+
+        UserBean2 userBean = null;
+        try {
+            HttpGet get2 = new HttpGet(DB.URL_LINK + "get_my_bids.php?t_id=" + transporter_id);
+
+            HttpResponse httpResponse = httpClient.execute(get2);
+            HttpEntity httpEntity = httpResponse.getEntity();
+
+            InputStream inputStream = httpEntity.getContent();
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+            StringBuilder builder = new StringBuilder();
+
+            String line = null;
+
+
+            while ((line = bufferedReader.readLine()) != null) {
+                builder.append(line + "\n");
+            }
+            String f = builder.toString();
+
+            int counter = 1;
+            JSONObject jsonObject = new JSONObject(f);
+
+
+            JSONArray jsonArray = jsonObject.optJSONArray("my_bids");
+
+
+
+            userBean = new UserBean2();
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+
+                JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+                 if (counter == 1) {
+                    //arrayList.add(jsonObject2.optString("user_id").toString());
+
+                    userBean.setMyBid_post_name(jsonObject2.optString("name").toString());
+
+                    counter++;
+                } else if (counter == 2) {
+                    //arrayList.add(jsonObject2.optString("name").toString());
+                    userBean.setMyBid_post_type(jsonObject2.optString("type").toString());
+
+                    counter++;
+                } else if (counter == 3) {
+                    //arrayList.add();
+                    userBean.setMyBid_post_cost(jsonObject2.optString("cost").toString());
+                    counter++;
+                } else if (counter == 4) {
+                    //arrayList.add(jsonObject2.optString("weight").toString());
+                    userBean.setMyBid_bid_amount(jsonObject2.optString("amount").toString());
+
+                    counter++;
+                } else if (counter == 5) {
+                    //arrayList.add(jsonObject2.optString("from").toString());
+                    userBean.setMyBid_bid_desc(jsonObject2.optString("desc").toString());
+                    counter = 1;
+                    arrayList.add(userBean);
+                    userBean = new UserBean2();
+                }
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return arrayList;
+    }
+    public static void add_rating(String user_id, String transporter_id, String rating_points, String rating_description, String date_of_rating){
+        HttpClient httpClient = new DefaultHttpClient();
+        StrictMode.setThreadPolicy(th);
+        try{
+            user_id = URLEncoder.encode(user_id, "UTF-8");
+            transporter_id = URLEncoder.encode(transporter_id, "UTF-8");
+            rating_points = URLEncoder.encode(rating_points, "UTF-8");
+            rating_description = URLEncoder.encode(rating_description, "UTF-8");
+            date_of_rating = URLEncoder.encode(date_of_rating, "UTF-8");
+
+            String link = DB.URL_LINK + "add_rating.php?user_id=" + user_id + "&transporter_id=" + transporter_id + "&rating_points=" + rating_points + "&rating_description=" + rating_description + "&date="+date_of_rating;
+            HttpGet httpGet = new HttpGet(link);
+            httpClient.execute(httpGet);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error =" + e);
         }
     }
 }

@@ -31,13 +31,12 @@ import java.util.Set;
 
 public class SplashActivity extends Activity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        //startService(new Intent(this, MyService.class));
 
         ImageDownloaderTask imageDownloaderTask = new ImageDownloaderTask();
         imageDownloaderTask.execute();
@@ -93,7 +92,7 @@ public class SplashActivity extends Activity {
 
 
                 }
-            }, 1500);
+            }, 4000);
         }
 
 
@@ -111,8 +110,6 @@ public class SplashActivity extends Activity {
     public void onBackPressed() {
         super.onBackPressed();
     }
-
-
 
 }
 

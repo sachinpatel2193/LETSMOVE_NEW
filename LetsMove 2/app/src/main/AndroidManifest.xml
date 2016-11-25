@@ -55,7 +55,6 @@
             android:name=".ListOfPost"
             android:screenOrientation="portrait" />
         <activity
-
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
@@ -83,7 +82,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".EditPost"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MyBids"
+            android:screenOrientation="portrait" />
+
+        <service android:name=".MyService" />
+
+        <activity android:name=".add_ratings"></activity>
     </application>
 
 </manifest>

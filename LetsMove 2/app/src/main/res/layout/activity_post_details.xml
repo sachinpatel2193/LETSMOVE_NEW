@@ -182,9 +182,10 @@
 
             <Button
                 android:text="View User"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="27dp"
+                android:drawableLeft="@drawable/viewuser"
                 android:id="@+id/view_user_of_post"/>
 
             <Button
@@ -192,8 +193,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="27dp"
-                android:layout_marginLeft="130dp"
-                android:id="@+id/bid_on_post"/>
+                android:layout_marginLeft="50dp"
+                android:drawableLeft="@drawable/like"
+                android:id="@+id/bid_on_post" />
 
 
         </LinearLayout>
