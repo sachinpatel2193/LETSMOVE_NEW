@@ -87,9 +87,12 @@
             android:name=".MyBids"
             android:screenOrientation="portrait" />
 
-        <service android:name=".MyService" />
+        <service android:name=".NotificationService" />
+        <service android:name=".AcceptedService" />
 
-        <activity android:name=".add_ratings"></activity>
+        <activity android:name=".add_ratings" />
+        <activity android:name=".final_transporter" />
+        <activity android:name=".BaseActivity"></activity>
     </application>
 
 </manifest>

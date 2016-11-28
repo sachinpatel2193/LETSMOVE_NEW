@@ -19,10 +19,14 @@ import java.io.InputStreamReader;
 import java.net.URLEncoder;
 import java.security.spec.EncodedKeySpec;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DB2 {
 
     static StrictMode.ThreadPolicy th = new StrictMode.ThreadPolicy.Builder().build();
+
+    public static Map<String, String> final_transporter_info = new HashMap<String, String>();
 
     static ArrayList get_My_Post_Data() {
         HttpClient httpClient = new DefaultHttpClient();
@@ -105,7 +109,7 @@ public class DB2 {
                     //arrayList.add(jsonObject2.optString("pickup_date").toString());
                     userBean.setMax_amount(jsonObject2.optString("max_amount").toString());
                     counter++;
-                } else if(counter==11) {
+                } else if (counter == 11) {
                     userBean.setStatus(jsonObject2.optString("status").toString());
                     counter = 1;
                     arrayList.add(userBean);
@@ -126,7 +130,7 @@ public class DB2 {
     }
 
 
-    static ArrayList get_bid_detail(String post_id){
+    static ArrayList get_bid_detail(String post_id) {
         HttpClient httpClient = new DefaultHttpClient();
         StrictMode.setThreadPolicy(th);
 
@@ -218,14 +222,14 @@ public class DB2 {
 
     //Bid gets accepted then this method is called
 
-    public static void bid_accepted_done(String post_id, String bidder_id){
+    public static void bid_accepted_done(String post_id, String bidder_id) {
         HttpClient httpClient = new DefaultHttpClient();
 
         StrictMode.setThreadPolicy(th);
 
         try {
-             post_id = URLEncoder.encode(post_id,"UTF-8");
-             bidder_id =URLEncoder.encode(bidder_id,"UTF-8");
+            post_id = URLEncoder.encode(post_id, "UTF-8");
+            bidder_id = URLEncoder.encode(bidder_id, "UTF-8");
 
             String link = DB.URL_LINK + "bid_accept_update.php?post_id=" + post_id + "&bidder_id=" + bidder_id;
             HttpGet httpGet = new HttpGet(link);
@@ -236,28 +240,27 @@ public class DB2 {
         }
     }
 
-    public static void update_post(String post_id, String post_title, String from_address, String to_address, String max_amount){
+    public static void update_post(String post_id, String post_title, String from_address, String to_address, String max_amount) {
         HttpClient httpClient = new DefaultHttpClient();
 
         StrictMode.setThreadPolicy(th);
 
-        try{
+        try {
             post_id = URLEncoder.encode(post_id, "UTF-8");
             from_address = URLEncoder.encode(from_address, "UTF-8");
             to_address = URLEncoder.encode(to_address, "UTF-8");
             max_amount = URLEncoder.encode(max_amount, "UTF-8");
 
-            String link = DB.URL_LINK + "update_post.php?post_id=" + post_id + "&post_title=" +post_title+ "&from_address=" + from_address + "&to_address=" + to_address + "&max_amount=" + max_amount;
+            String link = DB.URL_LINK + "update_post.php?post_id=" + post_id + "&post_title=" + post_title + "&from_address=" + from_address + "&to_address=" + to_address + "&max_amount=" + max_amount;
             HttpGet httpGet = new HttpGet(link);
             httpClient.execute(httpGet);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
 
     //To show their own bid list to transporters
-    public static ArrayList myBids(String transporter_id){
+    public static ArrayList myBids(String transporter_id) {
 
         HttpClient httpClient = new DefaultHttpClient();
         StrictMode.setThreadPolicy(th);
@@ -292,13 +295,12 @@ public class DB2 {
             JSONArray jsonArray = jsonObject.optJSONArray("my_bids");
 
 
-
             userBean = new UserBean2();
             for (int i = 0; i < jsonArray.length(); i++) {
 
 
                 JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                 if (counter == 1) {
+                if (counter == 1) {
                     //arrayList.add(jsonObject2.optString("user_id").toString());
 
                     userBean.setMyBid_post_name(jsonObject2.optString("name").toString());
@@ -331,23 +333,182 @@ public class DB2 {
         }
         return arrayList;
     }
-    public static void add_rating(String user_id, String transporter_id, String rating_points, String rating_description, String date_of_rating){
+
+    public static void add_rating(String user_id, String transporter_id, String rating_points, String rating_description, String date_of_rating) {
         HttpClient httpClient = new DefaultHttpClient();
         StrictMode.setThreadPolicy(th);
-        try{
+        try {
             user_id = URLEncoder.encode(user_id, "UTF-8");
             transporter_id = URLEncoder.encode(transporter_id, "UTF-8");
             rating_points = URLEncoder.encode(rating_points, "UTF-8");
             rating_description = URLEncoder.encode(rating_description, "UTF-8");
             date_of_rating = URLEncoder.encode(date_of_rating, "UTF-8");
 
-            String link = DB.URL_LINK + "add_rating.php?user_id=" + user_id + "&transporter_id=" + transporter_id + "&rating_points=" + rating_points + "&rating_description=" + rating_description + "&date="+date_of_rating;
+            String link = DB.URL_LINK + "add_rating.php?user_id=" + user_id + "&transporter_id=" + transporter_id + "&rating_points=" + rating_points + "&rating_description=" + rating_description + "&date=" + date_of_rating;
             HttpGet httpGet = new HttpGet(link);
             httpClient.execute(httpGet);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Error =" + e);
         }
     }
+
+    //This method is called by NotificationService that checks that if there is any new bid on the current user post
+    static ArrayList get_bid_notification(String user_id) {
+
+        HttpClient httpClient = new DefaultHttpClient();
+        StrictMode.setThreadPolicy(th);
+
+        ArrayList arrayList = new ArrayList();
+
+        System.out.println("User Id = "+user_id);
+        try {
+            HttpGet get2 = new HttpGet(DB.URL_LINK + "get_bid_notification.php?user_id=" + user_id);
+
+            HttpResponse httpResponse = httpClient.execute(get2);
+            HttpEntity httpEntity = httpResponse.getEntity();
+
+            InputStream inputStream = httpEntity.getContent();
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+            StringBuilder builder = new StringBuilder();
+
+            String line = null;
+
+
+            while ((line = bufferedReader.readLine()) != null) {
+                builder.append(line + "\n");
+            }
+            String f = builder.toString();
+
+            JSONObject jsonObject = new JSONObject(f);
+
+            JSONArray jsonArray = jsonObject.optJSONArray("notification_detail");
+
+            if(jsonArray != null) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+                    String detail = jsonObject2.optString("detail").toString();
+                    arrayList.add(detail);
+                }
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+
+        }
+
+        return arrayList;
+
+
+    }
+
+    //This method is called by AcceptedService that notifies transporter that they are accepted by customer
+    public static ArrayList get_accept_notification(String user_id) {
+
+            HttpClient httpClient = new DefaultHttpClient();
+            StrictMode.setThreadPolicy(th);
+
+            ArrayList arrayList = new ArrayList();
+
+            System.out.println("User Id = " + user_id);
+            try {
+                HttpGet get2 = new HttpGet(DB.URL_LINK + "get_accept_notification.php?user_id=" + user_id);
+
+                HttpResponse httpResponse = httpClient.execute(get2);
+                HttpEntity httpEntity = httpResponse.getEntity();
+
+                InputStream inputStream = httpEntity.getContent();
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+                StringBuilder builder = new StringBuilder();
+
+                String line = null;
+
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    builder.append(line + "\n");
+                }
+                String f = builder.toString();
+
+                JSONObject jsonObject = new JSONObject(f);
+
+                JSONArray jsonArray = jsonObject.optJSONArray("accept_detail");
+
+                if (jsonArray != null) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+                        String detail = jsonObject2.optString("detail").toString();
+                        arrayList.add(detail);
+                    }
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
+
+            }
+
+            return arrayList;
+    }
+
+
+        //////////////////////////////////////// getting final transporter's Details from database ///////////////////////////
+
+
+        public static Map<String,String> get_final_transporter_detail(String current_post_id){
+            HttpClient httpClient = new DefaultHttpClient();
+            StrictMode.setThreadPolicy(th);
+            try{
+                current_post_id = URLEncoder.encode(current_post_id, "UTF-8");
+
+
+                String link = DB.URL_LINK + "get_final_transporter_detail.php?post_id="+current_post_id;
+                HttpGet httpGet = new HttpGet(link);
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+
+
+                HttpEntity httpEntity = httpResponse.getEntity();
+
+
+                InputStream inputStream = httpEntity.getContent();
+
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+                StringBuilder builder = new StringBuilder();
+
+
+                String line=null;
+
+
+                while((line=bufferedReader.readLine()) !=null){
+                    builder.append(line + "\n");
+                }
+                String f = builder.toString();
+
+
+                JSONObject jsonObject = new JSONObject(f);
+                JSONArray jsonArray = jsonObject.optJSONArray("profile");
+
+
+                JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                JSONObject jsonObject2 = jsonArray.getJSONObject(1);
+                JSONObject jsonObject3 = jsonArray.getJSONObject(2);
+                JSONObject jsonObject4 = jsonArray.getJSONObject(3);
+
+
+                for(int i=0;i<jsonArray.length();i++){
+                    final_transporter_info.put("email", jsonObject1.optString("email"));
+                    final_transporter_info.put("name", jsonObject2.optString("name"));
+                    final_transporter_info.put("mobile", jsonObject3.optString("mobile"));
+                    final_transporter_info.put("id", jsonObject4.optString("id"));
+                }
+
+
+            }
+            catch (Exception e){
+                System.out.println("Error when getting final transporter data :" + e);
+            }
+
+
+            return final_transporter_info;
+        }
+
 }
+

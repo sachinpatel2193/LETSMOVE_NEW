@@ -3,11 +3,13 @@ package com.example.ankitrajput.letsmove;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class MyBids extends AppCompatActivity {
+public class MyBids extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,4 +28,15 @@ public class MyBids extends AppCompatActivity {
         listview_my_bids.setAdapter(customAdapterMyBids);
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
 }

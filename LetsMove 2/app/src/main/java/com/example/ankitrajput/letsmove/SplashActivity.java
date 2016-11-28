@@ -36,8 +36,6 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        //startService(new Intent(this, MyService.class));
-
         ImageDownloaderTask imageDownloaderTask = new ImageDownloaderTask();
         imageDownloaderTask.execute();
 
@@ -141,6 +139,7 @@ class ImageDownloaderTask extends AsyncTask<String, Void, Void> {
                 System.out.println("  img gg g     == ="+userBean.getPic_name());
 
                 System.out.println("Inside Asynch    =======  "+i+"  "+userBean.getName()+"  "+userBean.getPic_name());
+
                 URL url = new URL(IMAGE_URL + "" + userBean.getPic_name());
                 bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                 bitmapArrayList.add(bmp);

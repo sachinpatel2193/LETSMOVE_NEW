@@ -1,14 +1,24 @@
 package com.example.ankitrajput.letsmove;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.util.DisplayMetrics;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -19,9 +29,10 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-public class UserHome extends AppCompatActivity {
+public class UserHome extends BaseActivity {
 
     String UserRole = " ";
+    static String user_id;
 
     @Override
     public void onBackPressed() {
@@ -53,7 +64,6 @@ public class UserHome extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_user_home);
 
-
         ImageButton one = (ImageButton) findViewById(R.id.one);
         ImageButton two = (ImageButton) findViewById(R.id.two);
         ImageButton three = (ImageButton) findViewById(R.id.three);
@@ -65,19 +75,25 @@ public class UserHome extends AppCompatActivity {
         String google_login_name = preferences_email.getString("login_name", null);
         UserRole = preferences_email.getString("role", null);
 
+        //To get the user id of login user
+        user_id = preferences_email.getString("user_id", null);
 
         //final String role_of_user = preferences_email.getString("role", null);
         String Login_name_facebook = preferences_email.getString("login_facebook_name", null);
 
+        //To start notification service if user role is 1
+        if (UserRole.equals("1")) {
+            //To start the Notification Service for the users who are customer
+            startService(new Intent(getBaseContext(), NotificationService.class));
+        } else if (UserRole.equals("2")) {
+            //To start the Accepted Notification Service for the users who are transporter
+            startService(new Intent(getBaseContext(), AcceptedService.class));
+
+        }
 
         //SharedPreferences preferences_name = getSharedPreferences("login_user_name", MODE_PRIVATE);
         String name_session = preferences_email.getString("login_name", null);
 
-        //SharedPreferences preferences_google = getSharedPreferences("login_user_name", MODE_PRIVATE);
-        //String google_login_name= preferences_google.getString("login_google_name", null);
-
-        //SharedPreferences role_name = getSharedPreferences("user_role", MODE_PRIVATE);
-        //final String UserRole = role_name.getString("role", null);
 
         if (name_session != null) {
             System.out.println("user role ========== " + UserRole);
@@ -144,93 +160,104 @@ public class UserHome extends AppCompatActivity {
         four.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(UserHome.this);
-                builder.setTitle("Do you want to Logout ?");
-
-                // Set up the buttons
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        SharedPreferences sharedPreferences = getSharedPreferences("login_data", 0);
-                        sharedPreferences.edit().remove("login_email").commit();
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean("sign_in_with_google", true);
-                        editor.commit();
-
-
-                        SharedPreferences sharedPreferences2 = getSharedPreferences("login_user_name", 0);
-                        sharedPreferences2.edit().remove("login_name").commit();
-
-                        // Logout from facebook/////////////////////////////
-                        LoginManager.getInstance().logOut();
-
-                        //Logout from Google //////////////////////////////
-                        //if(UserLogin.mGoogleApiClient.isConnected() && UserLogin.mGoogleApiClient != null){
-                        //UserLogin.mGoogleApiClient.disconnect();
-                        //Auth.GoogleSignInApi.signOut(UserLogin.mGoogleApiClient);
-                        System.out.println("user Logged out from the app");
-                        //}
-                        finish();
-                        startActivity(new Intent(UserHome.this, HomeActivity.class));
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.show();
+                logout_app();
             }
         });
+    }
 
+    public void logout_app(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserHome.this);
+        builder.setTitle("Do you want to Logout ?");
+
+        // Set up the buttons
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                SharedPreferences sharedPreferences = getSharedPreferences("login_data", 0);
+                sharedPreferences.edit().remove("login_email").commit();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("sign_in_with_google", true);
+                editor.commit();
+
+
+                SharedPreferences sharedPreferences2 = getSharedPreferences("login_user_name", 0);
+                sharedPreferences2.edit().remove("login_name").commit();
+
+                // Logout from facebook/////////////////////////////
+                LoginManager.getInstance().logOut();
+
+                //Logout from Google //////////////////////////////
+                //if(UserLogin.mGoogleApiClient.isConnected() && UserLogin.mGoogleApiClient != null){
+                //UserLogin.mGoogleApiClient.disconnect();
+                //Auth.GoogleSignInApi.signOut(UserLogin.mGoogleApiClient);
+                System.out.println("user Logged out from the app");
+                //}
+
+                stopService(new Intent(getBaseContext(), NotificationService.class));
+                stopService(new Intent(getBaseContext(), AcceptedService
+                        .class));
+
+
+                finish();
+                startActivity(new Intent(UserHome.this, HomeActivity.class));
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
     }
 
 
 
-  /*  public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(group1Id, homeId, homeId, "").setIcon(R.drawable.home_menu);
-        menu.add(group1Id, profileId, profileId, "").setIcon(R.drawable.profile_menu);
-        menu.add(group1Id, searchId, searchId, "").setIcon(R.drawable.search_menu);
-        menu.add(group1Id, dealsId, dealsId, "").setIcon(R.drawable.deals_menu);
-        menu.add(group1Id, helpId, helpId, "").setIcon(R.drawable.help_menu);
-        menu.add(group1Id, contactusId, contactusId, "").setIcon(R.drawable.contactus_menu);
 
-        return super.onCreateOptionsMenu(menu);
+    private void addNotification() {
+        //Define sound URI
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.Builder builder = (android.support.v7.app.NotificationCompat.Builder)new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic)
+                        .setContentTitle(""+NotificationService.notification_data.get(0)+"  Bid Amount = "+NotificationService.notification_data.get(3))
+                        .setContentText(""+NotificationService.notification_data.get(4))
+                        .setSound(soundUri);
+
+        Intent notificationIntent = new Intent(this, UserHome.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentIntent);
+
+        // Add as notification
+        NotificationManager manager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
+        manager.notify(0, builder.build());
+    }
+
+    @Override
+    protected void onResume() { // TODO Auto-generated method stub
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("data"));
+
+    }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String num = intent.getStringExtra("data");
+            addNotification();
+        }
+
+    };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case 1:
-                // write your code here
-                Toast msg = Toast.makeText(MainHomeScreen.this, "Menu 1", Toast.LENGTH_LONG);
-                msg.show();
-                return true;
-
-            case 2:
-                // write your code here
-                return true;
-
-            case 3:
-                // write your code here
-                return true;
-
-            case 4:
-                // write your code here
-                return true;
-
-            case 5:
-                // write your code here
-                return true;
-
-            case 6:
-                // write your code here
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }*/
-
+        return super.onOptionsItemSelected(item);
+    }
 }

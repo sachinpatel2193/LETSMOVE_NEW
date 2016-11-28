@@ -10,6 +10,8 @@ import android.os.AsyncTask;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -23,7 +25,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import android.os.Handler;
 
-public class ViewUserDetails extends AppCompatActivity {
+public class ViewUserDetails extends BaseActivity {
 
     public static TextView user_details_Name, user_details_Email, user_details_Password, user_details_Mobile;
     public Button edit_user_button, btn_my_posts;
@@ -104,6 +106,16 @@ public class ViewUserDetails extends AppCompatActivity {
             btn_my_posts.setVisibility(View.VISIBLE);
 
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }
 

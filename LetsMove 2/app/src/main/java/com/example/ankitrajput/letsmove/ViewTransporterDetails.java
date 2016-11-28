@@ -8,6 +8,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,7 +17,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class ViewTransporterDetails extends AppCompatActivity {
+public class ViewTransporterDetails extends BaseActivity {
 
     //public TextView transporter_details_Name, transporter_details_Email, transporter_details_Password, transporter_details_Mobile;
     static String email_session;
@@ -92,5 +94,15 @@ public class ViewTransporterDetails extends AppCompatActivity {
             listview_transporters.setAdapter(adapter);
 
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -8,13 +8,18 @@ import android.support.annotation.StringDef;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class edit_user_details extends AppCompatActivity {
+import com.facebook.login.LoginManager;
+
+public class edit_user_details extends BaseActivity {
 
     public TextView Name_View, Email_View, Password_View, Mobile_View;
     public EditText edit_Name, edit_Email, edit_Password, edit_Mobile;
@@ -117,7 +122,16 @@ public class edit_user_details extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 }
 
 

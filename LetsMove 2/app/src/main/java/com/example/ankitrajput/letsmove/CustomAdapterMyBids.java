@@ -68,7 +68,7 @@ public class CustomAdapterMyBids extends BaseAdapter {
 
         try {
             post_name.setText("Post Name : "+userBean.getMyBid_post_name());
-            post_type.setText("Product Type : "+userBean.getMyBid_post_cost());
+            post_type.setText("Product Type : "+userBean.getMyBid_post_type());
             post_cost.setText("Maximum Cost : "+userBean.getMyBid_post_cost());
 
             bid_amount.setText("Your bid amount : "+userBean.getMyBid_bid_amount());

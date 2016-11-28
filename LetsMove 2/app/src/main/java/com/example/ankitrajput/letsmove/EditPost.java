@@ -1,12 +1,21 @@
 package com.example.ankitrajput.letsmove;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class EditPost extends AppCompatActivity {
+import com.facebook.login.LoginManager;
+
+public class EditPost extends BaseActivity {
 
     EditText post_title, from_address, to_address, max_amount;
     Button btn_update_save;
@@ -41,5 +50,15 @@ public class EditPost extends AppCompatActivity {
                 DB2.update_post(userBean.getPost_id(), new_post_title, new_from_address, new_to_address, new_max_amount);
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }

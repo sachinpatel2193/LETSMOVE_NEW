@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.icu.util.ULocale;
 import android.os.AsyncTask;
@@ -22,11 +23,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.TaskStackBuilder;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +40,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class PostDetails extends AppCompatActivity {
+public class PostDetails extends BaseActivity {
 
     Map<String,String> user_info = new HashMap<String, String>();
 
@@ -167,6 +171,15 @@ public class PostDetails extends AppCompatActivity {
 
                 Drawable listlogo = getResources().getDrawable(R.drawable.list);
                 view_user_details_of_post.setCompoundDrawablesWithIntrinsicBounds(listlogo, null, null, null);
+                view_user_details_of_post.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(PostDetails.this, final_transporter.class);
+                        intent.putExtra("current_post_id", userBean.getPost_id());
+                        startActivity(intent);
+                    }
+                });
+
                 bid_for_post.setVisibility(View.GONE);
 
             }
@@ -174,7 +187,6 @@ public class PostDetails extends AppCompatActivity {
                 view_user_details_of_post.setText("Edit");
                 Drawable editlogo = getResources().getDrawable(R.drawable.editbtn);
                 view_user_details_of_post.setCompoundDrawablesWithIntrinsicBounds(editlogo, null, null, null);
-
 
                 bid_for_post.setText("View Bids");
                 Drawable listlogo = getResources().getDrawable(R.drawable.list);
@@ -248,6 +260,17 @@ public class PostDetails extends AppCompatActivity {
         }
 
     };*/
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 
 }
 

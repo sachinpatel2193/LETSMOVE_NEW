@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,10 +24,12 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddressActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddressActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     private ProgressDialog progress;
     EditText add1_from, add2_from, city_from, postalcode_from;
@@ -201,6 +205,17 @@ public class AddressActivity extends AppCompatActivity implements AdapterView.On
             startActivity(new Intent(AddressActivity.this,UserHome.class));
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }
 

@@ -63,7 +63,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class NewPost extends Activity implements AdapterView.OnItemSelectedListener {
+public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     static String post_title, type_item , weight , pic_name, pickup_Date, max_amount;
     public static String selected_Date;
@@ -264,11 +264,6 @@ public class NewPost extends Activity implements AdapterView.OnItemSelectedListe
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
@@ -344,5 +339,14 @@ public class NewPost extends Activity implements AdapterView.OnItemSelectedListe
                 }
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 }

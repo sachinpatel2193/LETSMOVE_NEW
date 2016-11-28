@@ -3,6 +3,7 @@ package com.example.ankitrajput.letsmove;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +26,7 @@ public class CustomAdapterPostList extends BaseAdapter {
     private Context context;
     UserBean userBean = new UserBean();
     static ArrayList arrayList = new java.util.ArrayList();
-
+    private RelativeLayout my_posts_list;
     private ImageView imageProduct;
     private TextView textviewtitle;
     private TextView textviewservice;
@@ -74,6 +76,7 @@ public class CustomAdapterPostList extends BaseAdapter {
 
             convertView = inflater.inflate(R.layout.customlist, null);
         }
+        my_posts_list = (RelativeLayout) convertView.findViewById(R.id.activity_my_posts);
         imageProduct = (ImageView) convertView.findViewById(R.id.imageView_cutom_layout_post);
         textviewtitle = (TextView) convertView.findViewById(R.id.textView_post_title);
         textviewservice = (TextView) convertView.findViewById(R.id.textView_product_type);
@@ -102,6 +105,9 @@ public class CustomAdapterPostList extends BaseAdapter {
                 //System.out.println("lllll == " + ListOfPost.user_id + " // " + post_user_id);
                 System.out.println(userBean.getStatus());
                 if(userBean.getStatus().equals("0")){
+                    //show_status.setVisibility(View.VISIBLE);
+                    convertView.setBackgroundColor(Color.rgb(153, 255, 51));
+
                     show_status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.submitbtn,0,0,0);
                 }
 

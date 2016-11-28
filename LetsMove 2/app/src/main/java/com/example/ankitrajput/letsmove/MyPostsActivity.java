@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -11,7 +13,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MyPostsActivity extends AppCompatActivity {
+public class MyPostsActivity extends BaseActivity {
 
     static String user_id;
     static ArrayList arrayList;
@@ -44,6 +46,16 @@ public class MyPostsActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }
 

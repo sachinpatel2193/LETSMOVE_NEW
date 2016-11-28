@@ -44,5 +44,5 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="280dp"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp" />
 </RelativeLayout>
