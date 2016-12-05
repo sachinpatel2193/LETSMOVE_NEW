@@ -21,12 +21,12 @@
         android:text="Description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="17dp"
         android:id="@+id/view_bids_transporter_bid_description"
         android:layout_below="@+id/view_bids_transporter_bid_amount"
         android:layout_alignLeft="@+id/view_bids_transporter_name"
         android:layout_alignStart="@+id/view_bids_transporter_name"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="40dp"
         android:textSize="18sp" />
 
     <TextView
@@ -34,32 +34,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_below="@+id/view_bid_name_label"
-        android:layout_alignLeft="@+id/view_bids_transporter_reviews"
+        android:layout_alignLeft="@+id/rate_of_transporter"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/view_bid_review_label"/>
-
-    <TextView
-
-        android:text="Transporter Review"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:id="@+id/view_bids_transporter_reviews"
-        android:layout_below="@+id/view_bids_transporter_name"
-        android:layout_alignLeft="@+id/view_bids_transporter_name"
-        android:layout_alignStart="@+id/view_bids_transporter_name"
-        android:layout_marginLeft="10dp"/>
 
     <TextView
         android:text="Amount:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:layout_below="@+id/view_bid_review_label"
         android:layout_alignLeft="@+id/view_bids_transporter_bid_amount"
@@ -68,24 +56,11 @@
         android:id="@+id/view_bid_amount_label"/>
 
     <TextView
-
-        android:text="Bid Amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:id="@+id/view_bids_transporter_bid_amount"
-        android:layout_below="@+id/view_bids_transporter_reviews"
-        android:layout_alignLeft="@+id/view_bids_transporter_reviews"
-        android:layout_alignStart="@+id/view_bids_transporter_reviews"
-        android:layout_marginLeft="10dp"
-        android:textSize="20sp" />
-
-    <TextView
         android:text="Name:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:layout_marginTop="15dp"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_alignLeft="@+id/view_bids_transporter_name"
         android:layout_alignParentLeft="true"
@@ -96,14 +71,41 @@
         android:text="Transporter Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/view_bids_transporter_name"
         android:textSize="25sp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="70dp"
-        android:layout_marginStart="70dp" />
+        android:layout_marginLeft="95dp"
+        android:layout_marginStart="85dp" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:max="5"
+        android:stepSize="0.5"
+        android:id="@+id/rate_of_transporter"
+        android:scaleX=".5"
+        android:scaleY=".5"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp"
+
+        android:layout_alignTop="@+id/view_bid_review_label"
+        android:layout_alignLeft="@+id/view_bids_transporter_name"
+        android:layout_alignStart="@+id/view_bids_transporter_name" />
+
+    <TextView
+
+        android:text="Bid Amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_bids_transporter_bid_amount"
+        android:textSize="20sp"
+        android:layout_alignBottom="@+id/rate_of_transporter"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="20dp"
+        />
 
 
 </RelativeLayout>

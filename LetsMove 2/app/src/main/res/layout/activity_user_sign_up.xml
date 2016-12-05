@@ -7,8 +7,8 @@
         android:id="@+id/r1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
-        android:background="#FC9"
         android:gravity="center">
 
         <TextView
@@ -125,14 +125,17 @@
 
             <Button
                 android:id="@+id/button_Signup"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:text="Signup"
-                style="@style/cstmbtn"/>
+                android:drawableLeft="@drawable/viewuser"
+                android:paddingLeft="120dp"
+                android:paddingRight="120dp"
+                />
 
 
         </LinearLayout>

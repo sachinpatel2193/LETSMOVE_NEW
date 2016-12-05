@@ -89,10 +89,14 @@
 
         <service android:name=".NotificationService" />
         <service android:name=".AcceptedService" />
+        <service android:name=".GetMessageService" />
 
         <activity android:name=".add_ratings" />
         <activity android:name=".final_transporter" />
-        <activity android:name=".BaseActivity"></activity>
+        <activity android:name=".BaseActivity" />
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".ChatList" />
+        <activity android:name=".View_my_ratings"></activity>
     </application>
 
 </manifest>

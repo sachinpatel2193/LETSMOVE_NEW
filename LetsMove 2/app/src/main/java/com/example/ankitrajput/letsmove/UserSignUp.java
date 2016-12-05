@@ -98,20 +98,7 @@ public class UserSignUp extends AppCompatActivity {
                                 + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
                 Boolean b = eMail.matches(EMAIL_REGEX);
 
-                if (name.equals("") || eMail.equals("") || pass1.equals("") || pass2.equals("") || mobile_num.equals("")) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(UserSignUp.this);
-                    builder.setTitle("Inavalid Data ! Fill all details");
-
-                    // Set up the buttons
-                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    });
-                    builder.show();
-
-                } else if (b == false) {
+                if(b == false) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(UserSignUp.this);
                     builder.setTitle("Inavalid Email ! Try Again");
 
@@ -123,7 +110,8 @@ public class UserSignUp extends AppCompatActivity {
                         }
                     });
                     builder.show();
-                } else if (!(pass1.equals(pass2))) {
+                }
+                else if(!(pass1.equals(pass2))) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(UserSignUp.this);
                     builder.setTitle("Both password does not match ! Try Again");
 
@@ -135,7 +123,7 @@ public class UserSignUp extends AppCompatActivity {
                         }
                     });
                     builder.show();
-                } else if (!(mobile_num.length() == 10)) {
+                } else if(!(mobile_num.length() == 10)) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(UserSignUp.this);
                     builder.setTitle("Invalid mobile number ! Try Again");
 
@@ -147,7 +135,21 @@ public class UserSignUp extends AppCompatActivity {
                         }
                     });
                     builder.show();
-                } else {
+                }
+                    else if(fname.length()==0 || fname.equals("") || fname==null || fname.equals(null) || eMail.equals("") || pass1.equals("") || pass2.equals("") || mobile_num.equals("")) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(UserSignUp.this);
+                        builder.setTitle("Invalid Data ! Fill all details");
+
+                        // Set up the buttons
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        builder.show();
+
+                    } else{
                     try {
 
                         String s = DB.check_email(eMail);

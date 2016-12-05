@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,7 @@ public class ViewUserDetails extends BaseActivity {
     Handler handler = new Handler();
     public static int counter = 0;
     LinearLayout linearLayoutProfile;
+    String userRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class ViewUserDetails extends BaseActivity {
         final SharedPreferences preferences_email = getSharedPreferences("login_data", MODE_PRIVATE);
         email_session = preferences_email.getString("login_email", null);
         String user_id = preferences_email.getString("user_id", null);
+        userRole = preferences_email.getString("role",null);
 
         user_details_Name = (TextView) findViewById(R.id.user_details_name);
         user_details_Email = (TextView) findViewById(R.id.user_details_email);
@@ -52,6 +55,8 @@ public class ViewUserDetails extends BaseActivity {
         linearLayoutProfile = (LinearLayout)findViewById(R.id.linear_layout_view_user_details);
 
         //To start the background process for getting user details
+
+
         GetUserDetailsBackground getUserDetailsBackground = new GetUserDetailsBackground();
         getUserDetailsBackground.execute();
 
@@ -63,9 +68,15 @@ public class ViewUserDetails extends BaseActivity {
         btn_my_posts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewUserDetails.this, MyPostsActivity.class);
-                intent.putExtra("posts", "my_posts");
-                startActivity(intent);
+                if(userRole.equals("1")){
+                    Intent intent = new Intent(ViewUserDetails.this, MyPostsActivity.class);
+                    intent.putExtra("posts", "my_posts");
+                    startActivity(intent);
+                }
+                else {
+                    startActivity(new Intent(ViewUserDetails.this, View_my_ratings.class));
+                }
+
             }
         });
 
@@ -73,6 +84,7 @@ public class ViewUserDetails extends BaseActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ViewUserDetails.this, edit_user_details.class));
+                finish();
             }
         });
     }
@@ -88,7 +100,6 @@ public class ViewUserDetails extends BaseActivity {
 
         @Override
         protected Void doInBackground(String... params) {
-
             DB.get_user_details(ViewUserDetails.email_session);
             return null;
         }
@@ -103,8 +114,16 @@ public class ViewUserDetails extends BaseActivity {
             ViewUserDetails.user_details_Mobile.setText(DB.get_user_mobile);
             ViewUserDetails.progressBar.setVisibility(View.INVISIBLE);
             linearLayoutProfile.setVisibility(View.VISIBLE);
-            btn_my_posts.setVisibility(View.VISIBLE);
-
+            if(userRole.equals("1")){
+                btn_my_posts.setVisibility(View.VISIBLE);
+            }
+            else {
+                btn_my_posts.setText("Ratings");
+                Drawable Ratelogo = getResources().getDrawable(R.drawable.rateicon);
+                btn_my_posts.setCompoundDrawablesWithIntrinsicBounds(Ratelogo, null, null, null);
+                btn_my_posts.setPadding(500,0,450,0);
+                btn_my_posts.setVisibility(View.VISIBLE);
+            }
         }
     }
     @Override

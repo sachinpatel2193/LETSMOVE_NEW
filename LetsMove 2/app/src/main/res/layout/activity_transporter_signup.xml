@@ -7,8 +7,8 @@
         android:id="@+id/r1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
-        android:background="#FC9"
         android:gravity="center">
 
         <TextView
@@ -117,8 +117,10 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
-                style="@style/cstmbtn"
-                android:text="Signup" />
+                android:text="Signup"
+                android:drawableLeft="@drawable/viewuser"
+                android:paddingLeft="120dp"
+                android:paddingRight="120dp"/>
 
 
         </LinearLayout>

@@ -20,8 +20,14 @@ public class BaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        SharedPreferences preferences_email = getSharedPreferences("login_data", MODE_PRIVATE);
+        String userRole = preferences_email.getString("Role",null);
+        String user_id=preferences_email.getString("user_id",null);
+
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

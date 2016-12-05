@@ -23,7 +23,7 @@ import org.w3c.dom.Text;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class add_ratings extends AppCompatActivity {
+public class add_ratings extends BaseActivity {
 
     TextView Trans_name_rating;
     RatingBar Rating_points;

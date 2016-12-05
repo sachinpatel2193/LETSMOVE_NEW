@@ -64,9 +64,8 @@ public class UserLogin extends AppCompatActivity {
         //To set image icon on Action Bar Android Activity
         ActionBar menu = getSupportActionBar();
         menu.setDisplayShowHomeEnabled(true);
-        menu.setIcon(R.drawable.iconactionbar);
 
-        menu.setTitle("   Login Page");
+        menu.setTitle("Login Page");
 
         final EditText login_email = (EditText) findViewById(R.id.editText_loginemail);
         final EditText login_password = (EditText) findViewById(R.id.editText_loginpassword);

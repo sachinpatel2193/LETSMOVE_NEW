@@ -132,10 +132,11 @@ public class AddressActivity extends BaseActivity implements AdapterView.OnItemS
                     d_postalcode = postalcode_destination.getText().toString();
 
 
-                if(!f_add1.isEmpty() && !f_add2.isEmpty() && !f_city.isEmpty() && !f_province.isEmpty() && !f_postalcode.isEmpty() && !d_add1.isEmpty() && !d_add2.isEmpty() && !d_city.isEmpty() && !d_province.isEmpty() && !d_postalcode.isEmpty())
+                if(!f_add1.isEmpty() && !f_city.isEmpty() && !f_province.isEmpty() && !f_postalcode.isEmpty() && !d_add1.isEmpty() && !d_city.isEmpty() && !d_province.isEmpty() && !d_postalcode.isEmpty())
                 {
                     TaskAddPost taskAddPost = new TaskAddPost();
                     taskAddPost.execute();
+                    System.out.println("YOOOooooooo. Execution Started !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(AddressActivity.this);

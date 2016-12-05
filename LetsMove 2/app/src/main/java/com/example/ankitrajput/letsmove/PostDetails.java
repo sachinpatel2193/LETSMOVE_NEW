@@ -8,11 +8,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.icu.util.ULocale;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -57,6 +59,8 @@ public class PostDetails extends BaseActivity {
     String clickedListPosition;
     String pos1;
     String user_poster_id;
+    Button View_Map;
+    String user_id;
 
     static UserBean userBean = new UserBean();
     ArrayList<Bitmap> arrayListBitmap = new ArrayList<Bitmap>();
@@ -82,14 +86,14 @@ public class PostDetails extends BaseActivity {
         postDetail_max_amount = (TextView) findViewById(R.id.max_ammount_view);
         bid_amount = (EditText)findViewById(R.id.edittext_bid_amount);
         bid_description = (EditText)findViewById(R.id.edit_text_bid_description);
-
+        View_Map = (Button)findViewById(R.id.view_map);
 
         System.out.println("444444444444  =  "+clickedListPosition+"   "  +pos1);
         view_user_details_of_post = (Button)findViewById(R.id.view_user_of_post);
         bid_for_post = (Button) findViewById(R.id.bid_on_post);
 
-
-
+        final SharedPreferences preferences_email = getSharedPreferences("login_data", MODE_PRIVATE);
+        user_id = preferences_email.getString("user_id", null);
 
         // userBean = (UserBean) ListOfPost.arrayList.get(ListOfPost.clickedList);
         /////////////////////
@@ -102,7 +106,6 @@ public class PostDetails extends BaseActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(PostDetails.this);
 
                     user_info = DB.get_user_details_by_id(userBean.getUser_id());
-
 
                     builder.setMessage("Name: " + user_info.get("name") + "\nEmail: " + user_info.get("email") + "\nMobile: " + user_info.get("mobile"))
                             .setCancelable(false)
@@ -130,10 +133,10 @@ public class PostDetails extends BaseActivity {
                         String bidAmount = bid_amount.getText().toString();
                         String bidDescription = bid_description.getText().toString();
                         if(!bidAmount.isEmpty() && !bidDescription.isEmpty()){
-                            DB.send_bid_info(userBean.post_id, user_poster_id, DB.getId, bidAmount, bidDescription);
+                            DB.send_bid_info(userBean.post_id, user_poster_id, user_id, bidAmount, bidDescription);
                             Toast.makeText(PostDetails.this,"Bid Done",Toast.LENGTH_SHORT).show();
                             finish();
-                            startActivity(new Intent(PostDetails.this,ListOfPost.class));
+                            startActivity(new Intent(PostDetails.this,UserHome.class));
                         }
                         else {
                             AlertDialog.Builder builder = new AlertDialog.Builder(PostDetails.this);
@@ -223,6 +226,14 @@ public class PostDetails extends BaseActivity {
 
         arrayListBitmap = CustomAdapterPostList.bitmapArray;
         postDetail_imageView.setImageBitmap((Bitmap) ImageDownloaderTask.bitmapArrayList.get(Integer.parseInt(clickedListPosition)));
+        final String link_for_map="https://www.google.ca/maps/dir/"+userBean.from_address+"/"+userBean.to_address;
+        View_Map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link_for_map));
+                startActivity(browserIntent);
+            }
+        });
 
         /////////////////method to visible the bid options and make the bid on post
 

@@ -1,5 +1,6 @@
 package com.example.ankitrajput.letsmove;
 
+import android.*;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,8 +10,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -80,6 +83,10 @@ public class UserHome extends BaseActivity {
 
         //final String role_of_user = preferences_email.getString("role", null);
         String Login_name_facebook = preferences_email.getString("login_facebook_name", null);
+
+        //TO get the permission to access media files
+        ActivityCompat.requestPermissions(UserHome.this,
+                new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
         //To start notification service if user role is 1
         if (UserRole.equals("1")) {
@@ -160,7 +167,7 @@ public class UserHome extends BaseActivity {
         four.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logout_app();
+                startActivity(new Intent(UserHome.this,ChatList.class ));
             }
         });
     }
@@ -259,5 +266,32 @@ public class UserHome extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    //This method allows to access the READ_EXTERNAL_STORAGE permission
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+              //      Toast.makeText(MainActivity.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 }

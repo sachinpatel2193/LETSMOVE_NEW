@@ -23,9 +23,8 @@ public class HomeActivity extends AppCompatActivity {
         //To set image icon on Action Bar Android Activity
         ActionBar menu = getSupportActionBar();
         menu.setDisplayShowHomeEnabled(true);
-        menu.setIcon(R.drawable.iconactionbar);
 
-        menu.setTitle("   LestMove Home");
+        menu.setTitle("LestMove Home");
 
 
         context = HomeActivity.this;

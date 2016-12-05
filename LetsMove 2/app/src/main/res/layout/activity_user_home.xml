@@ -78,7 +78,7 @@
                     android:layout_height="297dp"
                     android:layout_weight="1.00"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logout" />
+                    android:src="@drawable/chat" />
 
             </LinearLayout>
 

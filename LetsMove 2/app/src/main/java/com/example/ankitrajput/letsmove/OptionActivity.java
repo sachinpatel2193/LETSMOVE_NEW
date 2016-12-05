@@ -18,9 +18,7 @@ public class OptionActivity extends AppCompatActivity {
         //To set image icon on Action Bar Android Activity
         ActionBar menu = getSupportActionBar();
         menu.setDisplayShowHomeEnabled(true);
-        menu.setIcon(R.drawable.iconactionbar);
-
-        menu.setTitle("   LestMove");
+        menu.setTitle("LestMove");
 
         Button btn_one = (Button)findViewById(R.id.button_one);
         Button btn_two = (Button) findViewById(R.id.button_two);

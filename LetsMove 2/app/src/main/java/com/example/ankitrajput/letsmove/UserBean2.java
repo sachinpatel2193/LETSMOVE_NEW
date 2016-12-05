@@ -1,7 +1,43 @@
 package com.example.ankitrajput.letsmove;
 
 public class UserBean2 {
-    String bid_id,post_id,user_bidder_id,bidder_name, bidder_email, bidder_mobile,bid_amount,bid_description;
+    String bid_id;
+    String post_id;
+    String user_bidder_id;
+    String bidder_name;
+    String bidder_email;
+    String bidder_mobile;
+    String bid_amount;
+    String bid_description;
+    String average_Rating;
+
+    String message_from_id;
+    String message_to_id;
+    String message;
+
+    public String getMessage_to_id() {
+        return message_to_id;
+    }
+
+    public void setMessage_to_id(String message_to_id) {
+        this.message_to_id = message_to_id;
+    }
+
+    public String getMessage_from_id() {
+        return message_from_id;
+    }
+
+    public void setMessage_from_id(String message_from_id) {
+        this.message_from_id = message_from_id;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     //data for my_bids detail
     String myBid_post_name, myBid_post_type, myBid_post_cost, myBid_bid_amount, myBid_bid_desc;
@@ -109,4 +145,11 @@ public class UserBean2 {
     public void setBid_amount(String bid_amount) {
         this.bid_amount = bid_amount;
     }
+
+    public String getAverage_Rating() { return average_Rating; }
+
+    public void setAverage_Rating(String average_Rating) {
+        this.average_Rating = average_Rating;
+    }
+
 }

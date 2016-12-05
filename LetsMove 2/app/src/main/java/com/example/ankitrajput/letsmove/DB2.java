@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.security.spec.EncodedKeySpec;
 import java.util.ArrayList;
@@ -27,6 +28,16 @@ public class DB2 {
     static StrictMode.ThreadPolicy th = new StrictMode.ThreadPolicy.Builder().build();
 
     public static Map<String, String> final_transporter_info = new HashMap<String, String>();
+
+    static ArrayList arrayChatListName;
+    static  ArrayList arrayChatListId;
+
+    ArrayList list_of_raters_id = new ArrayList();
+    ArrayList list_of_rating_points = new ArrayList();
+    ArrayList list_of_description = new ArrayList();
+    ArrayList list_of_date = new ArrayList();
+
+    ArrayList list_of_raters_name = new ArrayList();
 
     static ArrayList get_My_Post_Data() {
         HttpClient httpClient = new DefaultHttpClient();
@@ -202,11 +213,14 @@ public class DB2 {
                 } else if (counter == 8) {
                     //arrayList.add(jsonObject2.optString("pic_name").toString());
                     userBean.setBid_description(jsonObject2.optString("description").toString());
+                    counter++;
+                }
+                else if(counter==9){
+                    userBean.setAverage_Rating(jsonObject2.optString("average_rating").toString());
                     counter = 1;
                     arrayList.add(userBean);
                     userBean = new UserBean2();
                 }
-
 
             }
 
@@ -215,9 +229,7 @@ public class DB2 {
             exception.printStackTrace();
 
         }
-
         return arrayList;
-
     }
 
     //Bid gets accepted then this method is called
@@ -509,6 +521,190 @@ public class DB2 {
 
             return final_transporter_info;
         }
+
+    static void send_Message(String message, String from_id, String to_id){
+        HttpClient httpClient = new DefaultHttpClient();
+
+        StrictMode.setThreadPolicy(th);
+
+        try {
+            message=URLEncoder.encode(message, "UTF-8");
+
+            String link = DB.URL_LINK + "send_message.php?from_id=" + from_id + "&to_id=" + to_id + "&message=" + message;
+            HttpGet httpGet = new HttpGet(link);
+
+            httpClient.execute(httpGet);
+        } catch (Exception e) {
+            System.out.println("Error = " + e);
+        }
+    }
+
+
+    static ArrayList get_Message(String from_id, String to_id){
+        HttpClient httpClient = new DefaultHttpClient();
+        StrictMode.setThreadPolicy(th);
+
+        ArrayList arrayList = new ArrayList();
+        String status = null;
+
+        UserBean2 userBean = null;
+        try {
+            HttpGet get2 = new HttpGet(DB.URL_LINK + "get_message.php?from_id=" + from_id+"&to_id="+to_id);
+
+            HttpResponse httpResponse = httpClient.execute(get2);
+            HttpEntity httpEntity = httpResponse.getEntity();
+
+            InputStream inputStream = httpEntity.getContent();
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+            StringBuilder builder = new StringBuilder();
+
+            String line = null;
+
+
+            while ((line = bufferedReader.readLine()) != null) {
+                builder.append(line + "\n");
+            }
+            String f = builder.toString();
+
+            int counter = 1;
+            JSONObject jsonObject = new JSONObject(f);
+
+
+            JSONArray jsonArray = jsonObject.optJSONArray("m");
+
+
+            userBean = new UserBean2();
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+
+                JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+                if (counter == 1) {
+                    userBean.setMessage_from_id(jsonObject2.optString("from_id").toString());
+
+                    counter++;
+                } else if (counter == 2) {
+                    userBean.setMessage_to_id(jsonObject2.optString("to_id").toString());
+
+                    counter++;
+                } else if (counter == 3) {
+                    userBean.setMessage(jsonObject2.optString("message").toString());
+                    counter = 1;
+                    arrayList.add(userBean);
+                    userBean = new UserBean2();
+                }
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return arrayList;
+    }
+
+    public static void getChatListId(String UserId){
+        HttpClient httpClient = new DefaultHttpClient();
+        StrictMode.setThreadPolicy(th);
+
+        arrayChatListName = new ArrayList();
+        arrayChatListId = new ArrayList();
+
+        try{
+            HttpGet link = new HttpGet(DB.URL_LINK + "get_chatlist_id.php?id=" + UserId);
+            HttpResponse httpResponse = httpClient.execute(link);
+            HttpEntity httpEntity = httpResponse.getEntity();
+            InputStream inputStream = httpEntity.getContent();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+            StringBuilder builder = new StringBuilder();
+            String line = null;
+            while ((line = bufferedReader.readLine()) != null) {
+                builder.append(line + "\n");
+            }
+            String f = builder.toString();
+            JSONObject jsonObject = new JSONObject(f);
+            JSONArray jsonArray = jsonObject.optJSONArray("chatlist");
+
+            int counter = 0;
+            for(int i=0; i<jsonArray.length();i++){
+                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                if(counter == 0){
+                    if(!UserId.equals(jsonObject1.optString("final_t_id").toString())) {
+                        arrayChatListId.add(jsonObject1.optString("final_t_id").toString());
+                    }
+                        counter++;
+                }
+                else if(counter == 1){
+                    if(!UserId.equals(jsonObject1.optString("user_id").toString())) {
+                        arrayChatListId.add(jsonObject1.optString("user_id").toString());
+                    }
+
+                    counter++;
+                }
+                else {
+                    arrayChatListName.add(jsonObject1.optString("name").toString());
+
+                    counter = 0;
+                }
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error =" + e);
+        }
+    }
+
+    public void get_My_ratings(String user_id){
+        StrictMode.setThreadPolicy(th);
+        HttpClient httpClient=new DefaultHttpClient();
+
+
+        try{
+            HttpGet httpGet = new HttpGet(DB.URL_LINK + "get_ratings.php?current_user_id="+user_id);
+            HttpResponse httpResponse = httpClient.execute(httpGet);
+            HttpEntity httpEntity=httpResponse.getEntity();
+            InputStream inputStream=httpEntity.getContent();
+            BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(inputStream,"UTF-8"),8);
+            StringBuilder builder=new StringBuilder();
+            String line=null;
+            while ((line = bufferedReader.readLine()) != null) {
+                builder.append(line + "\n");
+            }
+            String f = builder.toString();
+            JSONObject jsonObject = new JSONObject(f);
+            JSONArray jsonArray = jsonObject.optJSONArray("rates");
+
+
+            int counter = 0;
+            for(int i=0; i<jsonArray.length();i++){
+                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+
+                if(counter == 0){
+                    list_of_raters_id.add(jsonObject1.optString("user_id").toString());
+                    counter++;
+                }
+                else if(counter == 1){
+                    list_of_rating_points.add(jsonObject1.optString("rating_points").toString());
+                    counter++;
+                }
+                else if(counter == 2) {
+                    list_of_description.add(jsonObject1.optString("description").toString());
+                    counter++;
+                }
+                else if(counter == 3){
+                    list_of_date.add(jsonObject1.optString("date").toString());
+                    counter ++;
+                }
+                else{
+                    list_of_raters_name.add("Rate by "+jsonObject1.optString("name").toString());
+                    counter=0;
+                }
+            }
+        }
+        catch(Exception e){
+            System.out.println("Error when getting my ratings = " +e);
+        }
+    }
+
 
 }
 

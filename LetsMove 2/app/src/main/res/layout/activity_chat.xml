@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_chat"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.example.ankitrajput.letsmove.ChatActivity">
+
+    <TextView
+        android:text="TextView"
+        android:background="#5656"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/textView_chat_name"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="395dp"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:transcriptMode="alwaysScroll"
+        android:stackFromBottom="true"
+        android:id="@+id/listview_chat"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="247dp"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName"
+            android:hint="Enter message"
+            android:ems="10"
+            android:id="@+id/editText_message" />
+
+        <Button
+            android:id="@+id/button_send_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send"/>
+    </LinearLayout>
+</LinearLayout>

@@ -102,7 +102,10 @@ public class DB {
 
             HttpGet httpGet = new HttpGet(link);
 
+            System.out.println(link);
+
             httpClient.execute(httpGet);
+
             uploadImage();
 
         } catch (Exception e) {
@@ -510,40 +513,22 @@ public class DB {
     /////////////////////////////////////// get user details by id ///////////////////////////////////////////
 
     public static Map<String, String> get_user_details_by_id(String user_id){
-
-
         HttpClient httpClient = new DefaultHttpClient();
         StrictMode.setThreadPolicy(th);
-
-
         try {
             HttpGet link = new HttpGet(URL_LINK + "get_user_by_id.php?id=" + user_id);
             HttpResponse httpResponse = httpClient.execute(link);
-
-
             HttpEntity httpEntity = httpResponse.getEntity();
-
-
             InputStream inputStream = httpEntity.getContent();
-
-
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
             StringBuilder builder = new StringBuilder();
-
-
             String line = null;
-
-
             while ((line = bufferedReader.readLine()) != null) {
                 builder.append(line + "\n");
             }
             String f = builder.toString();
-
-
             JSONObject jsonObject = new JSONObject(f);
             JSONArray jsonArray = jsonObject.optJSONArray("profile");
-
-
             System.out.println("For Loop");
             JSONObject jsonObject2 = jsonArray.getJSONObject(0);
             JSONObject jsonObject3 = jsonArray.getJSONObject(1);
@@ -553,10 +538,7 @@ public class DB {
                 user_info.put("name",jsonObject2.optString("name").toString());
                 user_info.put("email",jsonObject3.optString("email").toString());
                 user_info.put("mobile",jsonObject4.optString("mobile").toString());
-
             }
-
-
         } catch (Exception exception) {
             exception.printStackTrace();
             System.out.println("Exception here");
@@ -564,7 +546,6 @@ public class DB {
         //System.out.println("I am " + get_user_email +","+ get_user_name);
         return user_info;
     }
-
     ///////////////////////////////////////// edit user details /////////////////////////////////////////////
 
     public static void edit_user(String New_name, String New_email, String New_password, String New_mobile, String email_session){

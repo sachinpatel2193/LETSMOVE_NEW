@@ -102,11 +102,29 @@ public class edit_user_details extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        DB.edit_user(new_name, new_email, new_password, new_mobile, email_session);
+                        String s = DB.check_email(new_email);
+                        if (s.equals("0")) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(edit_user_details.this);
+                            builder.setTitle("Email Id already used ! Try another");
 
-                        Toast.makeText(edit_user_details.this, "Edited Successfully", Toast.LENGTH_SHORT).show();
-                        finish();
+                            // Set up the buttons
+                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
+                                }
+                            });
+                            builder.show();
+                        }
+                        else {
+                            DB.edit_user(new_name, new_email, new_password, new_mobile, email_session);
+
+
+                            Toast.makeText(edit_user_details.this, "Edited Successfully", Toast.LENGTH_SHORT).show();
+                            finish();
+                            Intent intent = new Intent(edit_user_details.this, ViewUserDetails.class);
+                            startActivity(intent);
+                        }
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -1,11 +1,14 @@
 package com.example.ankitrajput.letsmove;
 
+import android.*;
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -13,6 +16,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,6 +54,9 @@ public class SplashActivity extends Activity {
 
         boolean netStatus = isNetworkAvailable();
 
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (netStatus == false) {
             progressBar.setVisibility(View.GONE);
             AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
