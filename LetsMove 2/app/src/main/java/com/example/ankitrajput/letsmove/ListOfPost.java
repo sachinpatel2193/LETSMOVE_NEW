@@ -103,6 +103,13 @@ public class ListOfPost extends BaseActivity {
 
             listview_post = (ListView) findViewById(R.id.listviewPost);
 
+            /*if(ImageDownloaderTask.arrayList != null){
+                for(int i=0;i<ImageDownloaderTask.arrayList.size(); i++)
+                    if(ImageDownloaderTask.arrayList.get(i) == null){
+                        ImageDownloaderTask.arrayList.set(i, R.drawable.logo);
+                    }
+            }*/
+
             adapterUserList = new CustomAdapterPostList(ListOfPost.this, ImageDownloaderTask.arrayList);
             listview_post.setAdapter(adapterUserList);
 

@@ -64,6 +64,7 @@ public class ViewBids extends BaseActivity {
                                                     dialog.cancel();
                                                 }
                                             });
+                                builder2.show();
                                 AlertDialog alert2 = builder2.create();
                                 alert2.show();
 

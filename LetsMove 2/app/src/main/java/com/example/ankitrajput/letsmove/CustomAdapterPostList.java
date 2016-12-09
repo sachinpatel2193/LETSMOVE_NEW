@@ -106,7 +106,7 @@ public class CustomAdapterPostList extends BaseAdapter {
                 System.out.println(userBean.getStatus());
                 if(userBean.getStatus().equals("0")){
                     //show_status.setVisibility(View.VISIBLE);
-                    convertView.setBackgroundColor(Color.rgb(153, 255, 51));
+                    convertView.setBackgroundColor(Color.rgb(204, 255, 204));
 
                     show_status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.submitbtn,0,0,0);
                 }

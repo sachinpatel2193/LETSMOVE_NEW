@@ -86,28 +86,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-
-            <TextView
-                android:text="Pickup Date :"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/button_new_setDate"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView11"
-                android:layout_alignLeft="@+id/textView11"
-                android:layout_alignStart="@+id/textView11"
-                android:layout_marginTop="28dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginStart="20dp"
-                android:textSize="20dp"
-                android:id="@+id/pickup_date_id" />
-
-
-            <TextView
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="27dp"
-                android:textSize="20dp"
-                android:id="@+id/pickup_date_view" />
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:drawableLeft="@drawable/selectdate"
+                android:layout_gravity="center"
+                android:paddingLeft="105dp"
+                android:paddingRight="95dp"
+                android:paddingBottom="20dp"
+                android:text="Pickup date" />
 
 
         </LinearLayout>

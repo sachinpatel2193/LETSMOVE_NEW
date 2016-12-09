@@ -20,6 +20,7 @@ public class CustomAdapterViewBids extends BaseAdapter {
     ArrayList arrayList = new ArrayList();
     Context context;
     UserBean2 userBean2;
+    float Avg_Rating;
 
     public CustomAdapterViewBids(Context context, ArrayList arrayList) {
         // TODO Auto-generated constructor stub
@@ -61,8 +62,12 @@ public class CustomAdapterViewBids extends BaseAdapter {
         TextView t_description = (TextView)convertView.findViewById(R.id.view_bids_transporter_bid_description);
 
         userBean2 = (UserBean2) arrayList.get(position);
-
-        float Avg_Rating = Float.parseFloat(userBean2.getAverage_Rating());
+        if(userBean2.getAverage_Rating()==null || userBean2.getAverage_Rating()==("0") || userBean2.getAverage_Rating().equals("null")) {
+            Avg_Rating=0;
+        }
+        else {
+            Avg_Rating= Float.parseFloat(userBean2.getAverage_Rating());
+        }
 
         Avg_Rating = (float)Math.round(Avg_Rating * 10)/10;
         t_review.setOnTouchListener(new View.OnTouchListener() {

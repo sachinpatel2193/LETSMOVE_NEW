@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,10 @@ public class MyBids extends BaseActivity {
 
         //This arraylist returns the my_bids details
         ArrayList arrayList_myBids = DB2.myBids(t_id);
+        if(arrayList_myBids.isEmpty()){
+            Toast.makeText(MyBids.this, "You didn't bid for any post yet.",Toast.LENGTH_LONG).show();
+            finish();
+        }
 
         CustomAdapterMyBids customAdapterMyBids = new CustomAdapterMyBids(MyBids.this, arrayList_myBids);
         listview_my_bids.setAdapter(customAdapterMyBids);

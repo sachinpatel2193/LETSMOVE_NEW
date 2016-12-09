@@ -10,6 +10,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.ankitrajput.letsmove.View_my_ratings">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:text="Ratings you got"
+        android:background="#000000"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:textSize="25dp"
+        android:id="@+id/label_ratings"/>
 
     <ListView
         android:layout_width="match_parent"
@@ -17,5 +26,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/label_ratings"
         android:id="@+id/my_ratings" />
 </RelativeLayout>

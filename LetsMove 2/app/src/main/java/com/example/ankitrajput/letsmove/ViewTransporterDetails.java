@@ -50,17 +50,7 @@ public class ViewTransporterDetails extends BaseActivity {
                             }
                         });
 
-                AlertDialog alert = builder.create();
-                alert.setButton(AlertDialog.BUTTON_NEUTRAL, "Rate this Transporter", new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(ViewTransporterDetails.this, add_ratings.class);
-                        intent.putExtra("Transporter Name",DB.transporterName.get(position).toString());
-                        intent.putExtra("Transporter Id", DB.transporterId.get(position).toString());
-                        startActivity(intent);
-                    }
-                });
-                alert.show();
+                builder.show();
             }
         });
 

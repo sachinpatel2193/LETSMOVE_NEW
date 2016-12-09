@@ -548,7 +548,7 @@ public class DB {
     }
     ///////////////////////////////////////// edit user details /////////////////////////////////////////////
 
-    public static void edit_user(String New_name, String New_email, String New_password, String New_mobile, String email_session){
+    public static void edit_user(String New_name, String New_email, String New_password, String New_mobile, String user_id){
         HttpClient httpClient = new DefaultHttpClient();
 
         StrictMode.setThreadPolicy(th);
@@ -558,9 +558,9 @@ public class DB {
             New_email=URLEncoder.encode(New_email,"UTF-8");
             New_password=URLEncoder.encode(New_password,"UTF-8");
             New_mobile=URLEncoder.encode(New_mobile,"UTF-8");
-            email_session=URLEncoder.encode(email_session, "UTF-8");
+            user_id=URLEncoder.encode(user_id, "UTF-8");
 
-            String link = URL_LINK + "edit_user.php?new_email=" + New_email + "&new_name=" + New_name + "&new_password=" + New_password + "&new_mobile=" + New_mobile + "&current_user=" + email_session;
+            String link = URL_LINK + "edit_user.php?new_email=" + New_email + "&new_name=" + New_name + "&new_password=" + New_password + "&new_mobile=" + New_mobile + "&current_user_id=" + user_id;
             HttpGet httpGet = new HttpGet(link);
 
             httpClient.execute(httpGet);

@@ -58,7 +58,6 @@ public class ChatActivity extends BaseActivity {
                 DB2.send_Message(message,user_id,to_id);
                 edittext_message.setText("");
                 setChatView();
-
             }
         });
     }

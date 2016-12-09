@@ -224,12 +224,38 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
                 pic_name = f.getName();
                 pickup_Date = selected_Date;
                 max_amount = edittext_max_amount.getText().toString();
-                if(!post_title.isEmpty() && !type_item.isEmpty() && !weight.isEmpty() && !pic_name.isEmpty() && !pickup_Date.isEmpty() && !max_amount.isEmpty()){
+                if(!post_title.isEmpty() && !type_item.isEmpty() && !weight.isEmpty() && !pic_name.isEmpty() && !max_amount.isEmpty()){
                     if(selectedDate) {
                         if(btnforImage) {
                             System.out.println(post_title + "  " + type_item + " " + weight + " " + pic_name + " " + pickup_Date + " " + max_amount + "");
                             startActivity(new Intent(NewPost.this, AddressActivity.class));
                         }
+                        else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(NewPost.this);
+                            builder.setMessage("Please Select an Image!")
+                                    .setCancelable(false)
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // do things
+                                            dialog.cancel();
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        }
+                    }
+                    else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(NewPost.this);
+                        builder.setMessage("Please Choose Date!")
+                                .setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // do things
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
                     }
                 }
                 else {

@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.security.spec.EncodedKeySpec;
 import java.util.ArrayList;
@@ -216,7 +217,12 @@ public class DB2 {
                     counter++;
                 }
                 else if(counter==9){
-                    userBean.setAverage_Rating(jsonObject2.optString("average_rating").toString());
+                    if (jsonObject2.optString("average_rating").toString()!=null) {
+                        userBean.setAverage_Rating(jsonObject2.optString("average_rating").toString());
+                    }
+                    else {
+                        userBean.setAverage_Rating("0");
+                    }
                     counter = 1;
                     arrayList.add(userBean);
                     userBean = new UserBean2();
@@ -252,18 +258,20 @@ public class DB2 {
         }
     }
 
-    public static void update_post(String post_id, String post_title, String from_address, String to_address, String max_amount) {
+    public static void update_post(String post_id, String post_title, String from_address, String to_address, String max_amount, String selected_date) {
         HttpClient httpClient = new DefaultHttpClient();
 
         StrictMode.setThreadPolicy(th);
 
         try {
             post_id = URLEncoder.encode(post_id, "UTF-8");
+            post_title = URLEncoder.encode(post_title, "UTF-8");
             from_address = URLEncoder.encode(from_address, "UTF-8");
             to_address = URLEncoder.encode(to_address, "UTF-8");
             max_amount = URLEncoder.encode(max_amount, "UTF-8");
+            selected_date = URLEncoder.encode(selected_date, "UTF-8");
 
-            String link = DB.URL_LINK + "update_post.php?post_id=" + post_id + "&post_title=" + post_title + "&from_address=" + from_address + "&to_address=" + to_address + "&max_amount=" + max_amount;
+            String link = DB.URL_LINK + "update_post.php?post_id=" + post_id + "&post_title=" + post_title + "&from_address=" + from_address + "&to_address=" + to_address + "&max_amount=" + max_amount + "&date=" + selected_date;
             HttpGet httpGet = new HttpGet(link);
             httpClient.execute(httpGet);
         } catch (Exception e) {
@@ -705,6 +713,22 @@ public class DB2 {
         }
     }
 
+    public static void changeRole(String user_id, String value){
+        StrictMode.setThreadPolicy(th);
+        HttpClient httpClient=new DefaultHttpClient();
+        try {
+            user_id = URLEncoder.encode(user_id, "UTF-8");
+            value = URLEncoder.encode(value, "UTF-8");
 
+            String link = DB.URL_LINK + "change_role.php?user_id=" + user_id + "&value_to_change=" +value;
+
+            HttpGet httpGet=new HttpGet(link);
+            httpClient.execute(httpGet);
+        }
+        catch (Exception e){
+            System.out.println("Error == "+e);
+        }
+
+    }
 }
 
