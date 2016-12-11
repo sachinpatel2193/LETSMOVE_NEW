@@ -200,7 +200,7 @@
             android:visibility="invisible"
             android:drawableLeft="@drawable/list"
             android:paddingLeft="110dp"
-            android:paddingRight="110dp"/>
+            android:paddingRight="110dp" />
 
 
     </LinearLayout>

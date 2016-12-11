@@ -158,6 +158,7 @@ public class UserSignUp extends AppCompatActivity {
                             DB.user_signup(eMail, name, pass1, mobile_num, user_type);
                             finish();
                             startActivity(new Intent(UserSignUp.this, UserLogin.class));
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             Toast.makeText(UserSignUp.this, "Signup Successfull", Toast.LENGTH_SHORT).show();
                         } else {
                             AlertDialog.Builder builder = new AlertDialog.Builder(UserSignUp.this);

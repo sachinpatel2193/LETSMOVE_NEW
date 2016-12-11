@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
@@ -29,9 +30,11 @@ public class BaseActivity extends AppCompatActivity {
         user_id=preferences_email.getString("user_id",null);
 
         if(userRole.equals("1")){
+            menu.findItem(R.id.transporter_list).setVisible(true);
             menu.findItem(R.id.view_as).setTitle("View as Transporter");
         }
         else {
+            menu.findItem(R.id.transporter_list).setVisible(false);
             menu.findItem(R.id.view_as).setTitle("View as Regular User");
         }
         return true;
@@ -48,13 +51,20 @@ public class BaseActivity extends AppCompatActivity {
 
                 SharedPreferences sharedPreferences = getSharedPreferences("login_data", 0);
                 sharedPreferences.edit().remove("login_email").commit();
+                sharedPreferences.edit().remove("login_name").commit();
+                sharedPreferences.edit().remove("user_id").commit();
+                sharedPreferences.edit().remove("role").commit();
+
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("sign_in_with_google", true);
                 editor.commit();
 
 
-                SharedPreferences sharedPreferences2 = getSharedPreferences("login_user_name", 0);
-                sharedPreferences2.edit().remove("login_name").commit();
+               // SharedPreferences sharedPreferences2 = getSharedPreferences("login_user_name", 0);
+               // sharedPreferences2.edit().remove("login_name").commit();
+
+               // SharedPreferences sharedPreferences3 = getSharedPreferences("login_user_name", 0);
+               // sharedPreferences2.edit().remove("login_name").commit();
 
                 // Logout from facebook/////////////////////////////
                 LoginManager.getInstance().logOut();
@@ -63,7 +73,6 @@ public class BaseActivity extends AppCompatActivity {
                 //if(UserLogin.mGoogleApiClient.isConnected() && UserLogin.mGoogleApiClient != null){
                 //UserLogin.mGoogleApiClient.disconnect();
                 //Auth.GoogleSignInApi.signOut(UserLogin.mGoogleApiClient);
-                System.out.println("user Logged out from the app");
                 //}
 
                 stopService(new Intent(getBaseContext(), NotificationService.class));
@@ -72,7 +81,8 @@ public class BaseActivity extends AppCompatActivity {
 
 
                 finish();
-                startActivity(new Intent(BaseActivity.this, HomeActivity.class));
+                startActivity(new Intent(BaseActivity.this, UserLogin.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -110,6 +120,7 @@ public class BaseActivity extends AppCompatActivity {
                             sharedPreferences2.edit().remove("login_name").commit();
 
                             // Logout from facebook/////////////////////////////
+
                             LoginManager.getInstance().logOut();
 
                             //Logout from Google //////////////////////////////
@@ -198,7 +209,14 @@ public class BaseActivity extends AppCompatActivity {
                     builder.show();
                     break;
                 }
-
+            case R.id.view_profile:
+                startActivity(new Intent(BaseActivity.this, ViewUserDetails.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                return true;
+            case R.id.transporter_list:
+                startActivity(new Intent(BaseActivity.this, ViewTransporterDetails.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                return true;
             case R.id.logout_shortcut:
                 logout_fromapp();
                 return true;

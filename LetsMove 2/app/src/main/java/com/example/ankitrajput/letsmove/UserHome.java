@@ -23,6 +23,7 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -48,7 +49,6 @@ public class UserHome extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-
                 finish();
             }
         });
@@ -67,23 +67,20 @@ public class UserHome extends BaseActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_user_home);
 
-        ImageButton one = (ImageButton) findViewById(R.id.one);
-        ImageButton two = (ImageButton) findViewById(R.id.two);
-        ImageButton three = (ImageButton) findViewById(R.id.three);
-        ImageButton four = (ImageButton) findViewById(R.id.four);
+        Button one = (Button) findViewById(R.id.one);
+        Button two = (Button) findViewById(R.id.two);
+        Button three = (Button) findViewById(R.id.three);
+        //Button four = (Button) findViewById(R.id.four);
         TextView textView_name = (TextView) findViewById(R.id.welcome_user_textview);
 
         final SharedPreferences preferences_email = getSharedPreferences("login_data", MODE_PRIVATE);
         String email_session = preferences_email.getString("login_email", null);
         String google_login_name = preferences_email.getString("login_name", null);
         UserRole = preferences_email.getString("role", null);
-
         //To get the user id of login user
         user_id = preferences_email.getString("user_id", null);
-
         //final String role_of_user = preferences_email.getString("role", null);
         String Login_name_facebook = preferences_email.getString("login_facebook_name", null);
-
         //TO get the permission to access media files
         ActivityCompat.requestPermissions(UserHome.this,
                 new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
@@ -95,13 +92,9 @@ public class UserHome extends BaseActivity {
         } else if (UserRole.equals("2")) {
             //To start the Accepted Notification Service for the users who are transporter
             startService(new Intent(getBaseContext(), AcceptedService.class));
-
         }
-
         //SharedPreferences preferences_name = getSharedPreferences("login_user_name", MODE_PRIVATE);
         String name_session = preferences_email.getString("login_name", null);
-
-
         if (name_session != null) {
             System.out.println("user role ========== " + UserRole);
             System.out.println("Session name --------------------");
@@ -115,12 +108,12 @@ public class UserHome extends BaseActivity {
             System.out.println("Facebook Name ---------------------");
             textView_name.setText("Welcome " + Login_name_facebook);
         }
-
-
         if (UserRole.equals("2")) {
             //This is to set images for transporter
-            one.setImageResource(R.drawable.mybids);
-            three.setImageResource(R.drawable.posts);
+            //one.setImageResource(R.drawable.mybids);
+            //three.setImageResource(R.drawable.posts);
+            one.setText("My Bids");
+            two.setText("All Posts");
         }
         //Get Height and width of screen of mobile////////////////////
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -128,48 +121,59 @@ public class UserHome extends BaseActivity {
         int height = displaymetrics.heightPixels;
         int width = displaymetrics.widthPixels;
         //////////////////////////////////////////////////////////////////////
-        height = height - 500;
-
-        one.getLayoutParams().height = height / 2;
-        two.getLayoutParams().height = height / 2;
-        three.getLayoutParams().height = height / 2;
-        four.getLayoutParams().height = height / 2;
-
-
+        //height = height - 500;
+        //one.getLayoutParams().height = height / 2;
+        //two.getLayoutParams().height = height / 2;
+        //three.getLayoutParams().height = height / 2;
+        //four.getLayoutParams().height = height / 2;
         one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (UserRole.equals("1")) {
                     startActivity(new Intent(UserHome.this, NewPost.class));
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else {
                     startActivity(new Intent(UserHome.this, MyBids.class));
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
         });
+        /*two.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserHome.this, ListOfPost.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });*/
         two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UserHome.this, ViewUserDetails.class));
+                if (UserRole.equals("1")) {
+                    startActivity(new Intent(UserHome.this, MyPostsActivity.class));
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                } else {
+                    Intent intent = new Intent(UserHome.this, ListOfPost.class);
+                    intent.putExtra("posts", "all_posts");
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
             }
         });
         three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (UserRole.equals("1")) {
-                    startActivity(new Intent(UserHome.this, ViewTransporterDetails.class));
-                } else {
-                    Intent intent = new Intent(UserHome.this, ListOfPost.class);
-                    intent.putExtra("posts", "all_posts");
-                    startActivity(intent);
-                }
+                startActivity(new Intent(UserHome.this,ChatList.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-        four.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserHome.this,ChatList.class ));
-            }
-        });
+        finish();
+        if (UserRole.equals("1")) {
+            startActivity(new Intent(UserHome.this, MyPostsActivity.class));
+        } else {
+            Intent intent = new Intent(UserHome.this, ListOfPost.class);
+            intent.putExtra("posts", "all_posts");
+            startActivity(intent);
+        }
     }
 
     public void logout_app(){
@@ -180,13 +184,11 @@ public class UserHome extends BaseActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 SharedPreferences sharedPreferences = getSharedPreferences("login_data", 0);
                 sharedPreferences.edit().remove("login_email").commit();
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("sign_in_with_google", true);
                 editor.commit();
-
 
                 SharedPreferences sharedPreferences2 = getSharedPreferences("login_user_name", 0);
                 sharedPreferences2.edit().remove("login_name").commit();
@@ -205,9 +207,9 @@ public class UserHome extends BaseActivity {
                 stopService(new Intent(getBaseContext(), AcceptedService
                         .class));
 
-
                 finish();
-                startActivity(new Intent(UserHome.this, HomeActivity.class));
+                startActivity(new Intent(UserHome.this, UserLogin.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

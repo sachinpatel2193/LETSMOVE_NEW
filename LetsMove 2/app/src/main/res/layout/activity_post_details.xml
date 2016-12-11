@@ -87,7 +87,6 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="TextView"
-
             android:textSize="15dp" />
 
         <Button
@@ -97,7 +96,8 @@
             android:text="View On Map"
             android:drawableLeft="@drawable/map"
             android:paddingLeft="100dp"
-            android:paddingRight="100dp"/>
+            android:paddingRight="100dp"
+            android:layout_marginTop="10dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -166,7 +166,7 @@
         <EditText
             android:id="@+id/edittext_bid_amount"
             android:layout_width="fill_parent"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="15dp"
             android:layout_height="wrap_content"
             android:hint="Enter bid amount"
             android:visibility="gone"
@@ -175,15 +175,14 @@
         <EditText
             android:id="@+id/edit_text_bid_description"
             android:inputType="textMultiLine"
-            android:layout_marginTop="27dp"
-            android:lines="8"
+            android:layout_marginTop="10dp"
             android:visibility="gone"
-            android:minLines="6"
-            android:maxLines="10"
+            android:maxLines="1"
             android:hint="Enter description"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:scrollbars="vertical"
+            android:gravity="bottom|left"
             />
         <LinearLayout
             android:layout_width="wrap_content"
@@ -191,20 +190,20 @@
 
             <Button
                 android:text="View User"
-                android:layout_width="130dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="27dp"
+                android:layout_marginTop="22dp"
                 android:drawableLeft="@drawable/viewuser"
                 android:id="@+id/view_user_of_post"/>
 
             <Button
                 android:text="Bid on Post"
-                android:layout_width="wrap_content"
+                android:layout_width="155dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="27dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginLeft="40dp"
                 android:drawableLeft="@drawable/like"
-                android:id="@+id/bid_on_post" />
+                android:id="@+id/bid_on_post"/>
 
 
         </LinearLayout>

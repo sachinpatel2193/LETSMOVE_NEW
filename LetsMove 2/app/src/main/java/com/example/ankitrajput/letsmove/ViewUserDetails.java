@@ -75,6 +75,7 @@ public class ViewUserDetails extends BaseActivity {
                 }
                 else {
                     startActivity(new Intent(ViewUserDetails.this, View_my_ratings.class));
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
 
             }
@@ -84,6 +85,7 @@ public class ViewUserDetails extends BaseActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ViewUserDetails.this, edit_user_details.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
         });

@@ -116,6 +116,7 @@ public class TransporterSignup extends AppCompatActivity {
                             DB.user_signup(e, name, pass1, m, user_type);
                             finish();
                             startActivity(new Intent(TransporterSignup.this, UserLogin.class));
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             Toast.makeText(TransporterSignup.this, "Signup Successfull", Toast.LENGTH_SHORT).show();
                         }
                         else{

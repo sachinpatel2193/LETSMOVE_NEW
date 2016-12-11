@@ -82,6 +82,7 @@ public class UserLogin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(UserLogin.this, OptionActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -151,8 +152,11 @@ public class UserLogin extends AppCompatActivity {
                         editor.putString("role", DB.getRole);
                         editor.commit();
 
+                        // Initialize Facebook SDK once user will login, if remove then it gives error on logout
+                        FacebookSdk.sdkInitialize(getApplicationContext());
                         finish();
                         startActivity(new Intent(UserLogin.this, UserHome.class));
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
                     }
                 });
@@ -243,7 +247,21 @@ public class UserLogin extends AppCompatActivity {
                         editor.putString("role", DB.getRole);
                         editor.commit();
 
+                        /*if(DB.getRole.equals("1")){
+                            Intent intent = new Intent(UserLogin.this, MyPostsActivity.class);
+                            intent.putExtra("posts", "my_posts");
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        }
+                        else {
+                            Intent intent = new Intent(UserLogin.this, ListOfPost.class);
+                            intent.putExtra("posts", "all_posts");
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        }*/
+
                         startActivity(new Intent(UserLogin.this, UserHome.class));
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
                         Toast.makeText(UserLogin.this, "Login Successful", Toast.LENGTH_LONG).show();
                         finish();
@@ -322,6 +340,7 @@ public class UserLogin extends AppCompatActivity {
 
             finish();
             startActivity(new Intent(UserLogin.this, UserHome.class));
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             //updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
@@ -344,9 +363,27 @@ public class UserLogin extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(UserLogin.this, HomeActivity.class));
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserLogin.this);
+        builder.setTitle("Exit ?");
+
+        // Set up the buttons
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
     }
+
 
 }
 

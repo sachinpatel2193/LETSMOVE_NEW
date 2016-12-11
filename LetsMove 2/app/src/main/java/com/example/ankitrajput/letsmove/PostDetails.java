@@ -217,7 +217,7 @@ public class PostDetails extends BaseActivity {
         postDetail_Name.setText(userBean.getName());
         postDetail_from_address.setText(userBean.getFrom_address());
         postDetail_to_address.setText(userBean.getTo_address());
-        postDetail_imageView.setImageBitmap(bmp);
+        //postDetail_imageView.setImageBitmap(bmp);
         postDetail_pickup_date.setText(userBean.getPickup_date());
         postDetail_max_amount.setText(userBean.getMax_amount());
 

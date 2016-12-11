@@ -1,11 +1,11 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/back">
+    android:layout_height="fill_parent">
+    <!--android:background="@drawable/back"-->
 
     <GridLayout
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         android:columnCount="1">
 
         <TextView
@@ -20,7 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2">
+            android:weightSum="4">
 
             <ImageButton
                 android:id="@+id/first"
@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
-                android:src="@drawable/register" />
+                android:src="@drawable/register_icon" />
 
             <ImageButton
                 android:id="@+id/second"
@@ -37,12 +37,12 @@
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
                 android:src="@drawable/login" />
-        </LinearLayout>
+        <!--/LinearLayout-->
 
-        <LinearLayout
+        <!--LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2">
+            android:weightSum="2"-->
 
             <ImageButton
                 android:id="@+id/third"
@@ -55,7 +55,7 @@
             <ImageButton
                 android:id="@+id/forth"
                 android:layout_width="0dp"
-                android:layout_height="297dp"
+                android:layout_height="100dp"
                 android:layout_weight="1.00"
                 android:scaleType="fitCenter"
                 android:src="@drawable/info" />

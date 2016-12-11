@@ -49,7 +49,7 @@ public class AcceptedService extends Service {
                     if (!(accepted_data.isEmpty())) {
                         sendDataBack();
                     } else {
-                        System.out.println("Here only");
+                        System.out.println("Accepted Service");
                     }
                 } else {
                     System.out.println("No Internet Connection");
@@ -72,7 +72,7 @@ public class AcceptedService extends Service {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         android.support.v7.app.NotificationCompat.Builder builder = (android.support.v7.app.NotificationCompat.Builder) new android.support.v7.app.NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.iconactionbar)
+                .setSmallIcon(R.drawable.icon)
                 .setContentTitle("LetsMove")
                 //.setContentText("" + accepted_data.get(0) + " (" + accepted_data.get(1)+")" )
                 //.setContentText("" + accepted_data.get(2))

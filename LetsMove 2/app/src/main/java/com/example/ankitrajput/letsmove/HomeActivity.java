@@ -41,10 +41,10 @@ public class HomeActivity extends AppCompatActivity {
         //////////////////////////////////////////////////////////////////////
         height = height - 400;
 
-        first.getLayoutParams().height=height/2;
-        second.getLayoutParams().height=height/2;
-        third.getLayoutParams().height=height/2;
-        forth.getLayoutParams().height=height/2;
+        first.getLayoutParams().height=height/4;
+        second.getLayoutParams().height=height/4;
+        third.getLayoutParams().height=height/4;
+        forth.getLayoutParams().height=height/4;
 
         //////////////////////////////////////////// on click Listener//////////////////////////////
 
@@ -53,6 +53,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 startActivity(new Intent(HomeActivity.this, OptionActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -62,6 +63,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 finish();
                 startActivity(new Intent(HomeActivity.this, UserLogin.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
             }
         });
@@ -70,6 +72,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, ViewTransporterDetails.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
             }
         });

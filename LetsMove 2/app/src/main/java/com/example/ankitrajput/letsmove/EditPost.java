@@ -99,10 +99,7 @@ public class EditPost extends BaseActivity {
                 new_to_address = to_address.getText().toString();
                 new_max_amount = max_amount.getText().toString();
 
-                if(!new_post_title.equals("") && !new_from_address.equals("") && !new_to_address.equals("") && !new_max_amount.equals("") && !dateSelected){
-                    DB2.update_post(userBean.getPost_id(), new_post_title, new_from_address, new_to_address, new_max_amount, selected_Date);
-                }
-                else {
+                if(new_post_title.equals("") || new_from_address.equals("") || new_to_address.equals("") || new_max_amount.equals("")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(EditPost.this);
                     builder.setMessage("One or Two fields of an Ad can not be Empty!")
                             .setCancelable(false)
@@ -114,6 +111,11 @@ public class EditPost extends BaseActivity {
                             });
                     AlertDialog alert = builder.create();
                     alert.show();
+                }
+                else {
+                    DB2.update_post(userBean.getPost_id(), new_post_title, new_from_address, new_to_address, new_max_amount, selected_Date);
+                    startActivity(new Intent(EditPost.this, UserHome.class));
+                    finish();
                 }
 
             }

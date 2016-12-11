@@ -55,7 +55,7 @@ public class NotificationService extends Service {
 
                     }
                     else{
-                        System.out.println("Here only");
+                        System.out.println("Notification Service");
                     }
                 }
                 else{
@@ -81,7 +81,7 @@ public class NotificationService extends Service {
             Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
             android.support.v7.app.NotificationCompat.Builder builder = (android.support.v7.app.NotificationCompat.Builder)new android.support.v7.app.NotificationCompat.Builder(this)
-                    .setSmallIcon(R.drawable.iconactionbar)
+                    .setSmallIcon(R.drawable.icon)
                     .setContentTitle("LetsMove")
                     //.setContentText(""+NotificationService.notification_data.get(0)+"  (Bid Amount = "+NotificationService.notification_data.get(3)+")")
                     //.setContentText(""+NotificationService.notification_data.get(4))

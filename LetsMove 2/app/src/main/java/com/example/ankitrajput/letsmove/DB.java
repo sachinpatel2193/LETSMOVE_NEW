@@ -106,7 +106,9 @@ public class DB {
 
             httpClient.execute(httpGet);
 
-            uploadImage();
+            if(!(pic_name.equals("no_pic.jpg"))) {
+                uploadImage();
+            }
 
         } catch (Exception e) {
             System.out.println("Error = " + e);

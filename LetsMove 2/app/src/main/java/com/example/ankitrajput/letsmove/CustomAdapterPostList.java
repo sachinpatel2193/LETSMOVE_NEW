@@ -59,7 +59,7 @@ public class CustomAdapterPostList extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
 
 
@@ -72,16 +72,14 @@ public class CustomAdapterPostList extends BaseAdapter {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (convertView == null) {
-
             convertView = inflater.inflate(R.layout.customlist, null);
-        }
         my_posts_list = (RelativeLayout) convertView.findViewById(R.id.activity_my_posts);
         imageProduct = (ImageView) convertView.findViewById(R.id.imageView_cutom_layout_post);
         textviewtitle = (TextView) convertView.findViewById(R.id.textView_post_title);
         textviewservice = (TextView) convertView.findViewById(R.id.textView_product_type);
         show_status = (TextView) convertView.findViewById(R.id.status_show);
         userBean = (UserBean) arrayList.get(position);
+        RelativeLayout relativeLayout_my_post = (RelativeLayout)convertView.findViewById(R.id.relativelayout_my_post);
 
         System.out.println("Newwww   = = =   " + userBean.getPic_name() + "   " + userBean.getName());
         if (ListOfPost.posts_detail.equals("all_posts")) {
@@ -106,7 +104,7 @@ public class CustomAdapterPostList extends BaseAdapter {
                 System.out.println(userBean.getStatus());
                 if(userBean.getStatus().equals("0")){
                     //show_status.setVisibility(View.VISIBLE);
-                    convertView.setBackgroundColor(Color.rgb(204, 255, 204));
+                    relativeLayout_my_post.setBackgroundColor(Color.rgb(204, 255, 204));
 
                     show_status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.submitbtn,0,0,0);
                 }

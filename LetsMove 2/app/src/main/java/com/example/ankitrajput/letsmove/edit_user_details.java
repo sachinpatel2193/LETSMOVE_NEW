@@ -105,7 +105,7 @@ public class edit_user_details extends BaseActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            /*if(TextUtils.isEmpty(new_name) || TextUtils.isEmpty(new_email) || TextUtils.isEmpty(new_password) || TextUtils.isEmpty(new_mobile))
+                            if(new_name.equals("") || new_email.equals("") || new_password.equals("") || new_mobile.equals(""))
                             {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(edit_user_details.this);
                                 builder.setTitle("Invalid Data ! Fill all details");
@@ -120,7 +120,7 @@ public class edit_user_details extends BaseActivity {
 
                                 builder.show();
                             }
-                            else*/ if (!email_session.equals(new_email))
+                            else if (!email_session.equals(new_email))
                             {
                                 String s = DB.check_email(new_email);
                                 if (s.equals("0")) {
@@ -136,7 +136,8 @@ public class edit_user_details extends BaseActivity {
                                     });
                                     builder.show();
                                 }
-                            } else
+                            }
+                            else
                             {
                                 DB.edit_user(new_name, new_email, new_password, new_mobile, user_id);
                                 Toast.makeText(edit_user_details.this, "Edited Successfully", Toast.LENGTH_SHORT).show();
@@ -148,6 +149,7 @@ public class edit_user_details extends BaseActivity {
                             }
                         }
                     });
+
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

@@ -136,7 +136,7 @@ public class AddressActivity extends BaseActivity implements AdapterView.OnItemS
                 {
                     TaskAddPost taskAddPost = new TaskAddPost();
                     taskAddPost.execute();
-                    System.out.println("YOOOooooooo. Execution Started !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                //    System.out.println("YOOOooooooo. Execution Started !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(AddressActivity.this);

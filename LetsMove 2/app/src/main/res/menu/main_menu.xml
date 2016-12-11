@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/view_profile"
+            android:title="View Profile"/>
+
+    <item android:id="@+id/transporter_list"
+        android:title="Transporters"/>
+
     <item android:id="@+id/view_as"
-        android:title=""
-        android:icon="@drawable/helpwhite"
-        />
+        android:title=""/>
 
     <item android:id="@+id/help"
         android:title="Help"
-        android:icon="@drawable/helpwhite"
-        />
+        android:icon="@drawable/helpwhite"/>
+
     <item android:id="@+id/logout_shortcut"
-        android:title="Logout"
-        />
+        android:title="Logout"/>
 </menu>

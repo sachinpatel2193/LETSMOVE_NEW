@@ -6,21 +6,25 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Config;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,7 +69,7 @@ import java.util.Locale;
 
 public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
-    static String post_title, type_item , weight , pic_name, pickup_Date, max_amount;
+    static String post_title, type_item, weight, pic_name = "no_pic.jpg", pickup_Date, max_amount;
     public static String selected_Date;
     private DatePicker datePicker;
     private Calendar calendar;
@@ -78,7 +82,6 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
 
     // File upload url (replace the ip with your server address)
     public static final String FILE_UPLOAD_URL = "http://www.conestoga.freeoda.com/LetsMove/image_upload.php";
-
 
     // Camera activity request codes
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
@@ -95,17 +98,26 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
     Uri selectedImage;
     Bitmap photo;
     String ba1;
-    static  String filePath;
+    static String filePath = "";
+    File f;
+    String UserRole;
+
     String imagePath;
     Button btn_choose_pic;
-    Boolean selectedDate=false;
-    Boolean btnforImage=false;
+    Boolean selectedDate = false;
+    Boolean btnforImage = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
 
+//Get Height and width of screen of mobile////////////////////
+       /* DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int height = displaymetrics.heightPixels;
+        int width = displaymetrics.widthPixels;
+        */
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -113,7 +125,6 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
         showDate(year, month + 1, day);
-
 
         // Spinner element
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerProductType);
@@ -156,8 +167,18 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
         categories2.add("250 - 350 lb");
         categories2.add("> 350 lb");
 
+        Button one = (Button) findViewById(R.id.one_new_post);
+        Button two = (Button) findViewById(R.id.two_new_post);
+        Button three = (Button) findViewById(R.id.three_new_post);
 
-
+        final SharedPreferences preferences_email = getSharedPreferences("login_data", MODE_PRIVATE);
+        String email_session = preferences_email.getString("login_email", null);
+        String google_login_name = preferences_email.getString("login_name", null);
+        UserRole = preferences_email.getString("role", null);
+        //To get the user id of login user
+        user_id = preferences_email.getString("user_id", null);
+        //final String role_of_user = preferences_email.getString("role", null);
+        String Login_name_facebook = preferences_email.getString("login_facebook_name", null);
 
         ///////////////////////////////////////////////////////////spinner_creating_code///////////////////////////////////
         // Creating adapter for spinner
@@ -168,6 +189,70 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
 
         // attaching data adapter to spinner
         spinner2.setAdapter(dataAdapter2);
+
+        if (UserRole.equals("2")) {
+            //This is to set images for transporter
+            //one.setImageResource(R.drawable.mybids);
+            //three.setImageResource(R.drawable.posts);
+            one.setText("My Bids");
+            two.setText("All Posts");
+        }
+
+        //////////////////////////////////////////////////////////////////////
+        //height = height - 500;
+        //one.getLayoutParams().height = height / 2;
+        //two.getLayoutParams().height = height / 2;
+        //three.getLayoutParams().height = height / 2;
+        //four.getLayoutParams().height = height / 2;
+        /*one.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UserRole.equals("1")) {
+                    startActivity(new Intent(NewPost.this, NewPost.class));
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                } else {
+                    startActivity(new Intent(NewPost.this, MyBids.class));
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            }
+        });*/
+        /*two.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserHome.this, ListOfPost.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });*/
+        one.setBackgroundColor(Color.rgb(153,204,255));
+        two.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UserRole.equals("1")) {
+                    /*Intent intent = new Intent(NewPost.this, MyPostsActivity.class);
+                            intent.putExtra("posts", "my_posts");
+                            startActivity(intent);*/
+                    startActivity(new Intent(NewPost.this, MyPostsActivity.class));
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                } else {
+                    Intent intent = new Intent(NewPost.this, ListOfPost.class);
+                    intent.putExtra("posts", "all_posts");
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            }
+        });
+
+        three.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(NewPost.this, ChatList.class));
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
 
         ////////////////////////////////////////////////////////////////Set Date Onclick ////////////////////////////
 
@@ -190,12 +275,10 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                selectedDate=true;
+                selectedDate = true;
                 DatePickerDialog dpd = new DatePickerDialog(NewPost.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
                 dpd.show();
                 dpd.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-
-
             }
         });
 
@@ -204,7 +287,7 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
         btn_choose_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnforImage=true;
+                btnforImage = true;
                 Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, 1);
             }
@@ -217,20 +300,28 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
             @Override
             public void onClick(View v) {
 
-                File f = new File(filePath);
+                if (!filePath.equals("")) {
+                    f = new File(filePath);
+                    pic_name = f.getName();
+                }
                 post_title = edittext_post_title.getText().toString();
                 type_item = spinner.getSelectedItem().toString();
                 weight = spinner2.getSelectedItem().toString();
-                pic_name = f.getName();
+
                 pickup_Date = selected_Date;
                 max_amount = edittext_max_amount.getText().toString();
-                if(!post_title.isEmpty() && !type_item.isEmpty() && !weight.isEmpty() && !pic_name.isEmpty() && !max_amount.isEmpty()){
-                    if(selectedDate) {
-                        if(btnforImage) {
-                            System.out.println(post_title + "  " + type_item + " " + weight + " " + pic_name + " " + pickup_Date + " " + max_amount + "");
+                if (!post_title.isEmpty() && !type_item.isEmpty() && !weight.isEmpty() && !pic_name.isEmpty() && !max_amount.isEmpty()) {
+                    if (selectedDate) {
+                        if (btnforImage) {
+                            //       System.out.println(post_title + "  " + type_item + " " + weight + " " + pic_name + " " + pickup_Date + " " + max_amount + "");
+
                             startActivity(new Intent(NewPost.this, AddressActivity.class));
+                        } else {
+                            Toast.makeText(NewPost.this, "No Image Selected", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(NewPost.this, AddressActivity.class));
+
                         }
-                        else {
+                       /* else {
                             AlertDialog.Builder builder = new AlertDialog.Builder(NewPost.this);
                             builder.setMessage("Please Select an Image!")
                                     .setCancelable(false)
@@ -242,9 +333,8 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
                                     });
                             AlertDialog alert = builder.create();
                             alert.show();
-                        }
-                    }
-                    else {
+                        }*/
+                    } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(NewPost.this);
                         builder.setMessage("Please Choose Date!")
                                 .setCancelable(false)
@@ -257,8 +347,7 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
                         AlertDialog alert = builder.create();
                         alert.show();
                     }
-                }
-                else {
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(NewPost.this);
                     builder.setMessage("One or Multiple field of New Post can not be Empty!")
                             .setCancelable(false)
@@ -284,6 +373,7 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
         selected_Date = sdf.format(myCalendar.getTime());
         btn_setDate.setText(selected_Date);
     }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -336,7 +426,7 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
         return cursor.getString(column_index);
     }
 
-    public String getStringImage(Bitmap bmp){
+    public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
@@ -352,7 +442,7 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
             case 1:
                 if (resultCode == RESULT_OK) {
                     Uri uri = data.getData();
-                    String[] projection = { MediaStore.Images.Media.DATA };
+                    String[] projection = {MediaStore.Images.Media.DATA};
 
                     Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
                     cursor.moveToFirst();
@@ -365,6 +455,9 @@ public class NewPost extends BaseActivity implements AdapterView.OnItemSelectedL
                 }
         }
     }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);

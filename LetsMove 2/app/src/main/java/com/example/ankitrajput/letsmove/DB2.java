@@ -275,7 +275,7 @@ public class DB2 {
             HttpGet httpGet = new HttpGet(link);
             httpClient.execute(httpGet);
         } catch (Exception e) {
-
+            System.out.println("eeeeeeeee======"+e);
         }
     }
 

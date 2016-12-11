@@ -10,22 +10,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#FC9"
         android:gravity="center">
 
+
+        <LinearLayout
+            android:id="@+id/panel_option"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Add Post"
+                android:background="#ffffff"
+                android:id="@+id/one"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:text="My Post"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:id="@+id/two"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:text="Chat"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:id="@+id/three"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/welcome_user_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:gravity="center"
+            android:layout_gravity="center"
             android:text="Welcome to Let's Move"
-            android:textSize="25dp" />
+            android:textSize="25dp"
+            android:layout_marginRight="53dp"
+            android:layout_marginTop="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="53dp" />
     </RelativeLayout>
 
 
-    <ScrollView
+    <!--ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/r1">
@@ -84,5 +115,5 @@
 
 
         </GridLayout>
-    </ScrollView>
+    </ScrollView-->
 </RelativeLayout>

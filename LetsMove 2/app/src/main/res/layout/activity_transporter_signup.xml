@@ -76,7 +76,7 @@
                 android:layout_below="@+id/editText_email"
                 android:layout_marginTop="31dp"
                 android:ems="10"
-                android:hint="Choose password"
+                android:hint="Enter Password"
                 android:inputType="textPassword" />
 
 

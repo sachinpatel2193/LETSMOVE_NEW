@@ -35,14 +35,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class SplashActivity extends Activity {
+    String UserRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        ImageDownloaderTask imageDownloaderTask = new ImageDownloaderTask();
-        imageDownloaderTask.execute();
 
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
@@ -50,11 +49,9 @@ public class SplashActivity extends Activity {
 
         SharedPreferences preferences_email = getSharedPreferences("login_data", MODE_PRIVATE);
         final String email_session = preferences_email.getString("login_email", null);
-
+        UserRole = preferences_email.getString("role", null);
 
         boolean netStatus = isNetworkAvailable();
-
-
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (netStatus == false) {
@@ -79,6 +76,9 @@ public class SplashActivity extends Activity {
             });
             builder.show();
         } else {
+            ImageDownloaderTask imageDownloaderTask = new ImageDownloaderTask();
+            imageDownloaderTask.execute();
+
             new Handler().postDelayed(new Runnable() {
 
                 @Override
@@ -87,14 +87,28 @@ public class SplashActivity extends Activity {
                     progressBar.setVisibility(View.GONE);
 
                     if (email_session == null) {
-                        startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                        startActivity(new Intent(SplashActivity.this, UserLogin.class));
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
 
-                    } else {
+                    } else /*if(UserRole.equals("1"))*/{
+                            /*Intent intent = new Intent(SplashActivity.this, MyPostsActivity.class);
+                            intent.putExtra("posts", "my_posts");
+                            startActivity(intent);*/
                         startActivity(new Intent(SplashActivity.this, UserHome.class));
-                        finish();
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finish();
+                        }
+                       /* else {
+                            /*Intent intent = new Intent(SplashActivity.this, ListOfPost.class);
+                            intent.putExtra("posts", "all_posts");
+                            startActivity(intent);
 
-                    }
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finish();
+                        }*/
+
+
 
 
                 }
@@ -137,16 +151,16 @@ class ImageDownloaderTask extends AsyncTask<String, Void, Void> {
     public void setBitMapImageMethod(){
         try {
             arrayList = new ArrayList();
-            arrayList =  DB.get_Post_Data();
+            arrayList = DB.get_Post_Data();
 
             bitmapArrayList = new ArrayList();
 
 
             for(int i =0 ; i < arrayList.size();i++){
                 userBean = (UserBean)arrayList.get(i);
-                System.out.println("  img gg g     == ="+userBean.getPic_name());
 
-                System.out.println("Inside Asynch    =======  "+i+"  "+userBean.getName()+"  "+userBean.getPic_name());
+                System.out.println("Image Name = "+userBean.getPic_name());
+                System.out.println("Inside Asynch = "+i+"  "+userBean.getName()+" - "+userBean.getPic_name());
 
                 URL url = new URL(IMAGE_URL + "" + userBean.getPic_name());
                 bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
