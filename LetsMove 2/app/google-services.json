@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "238818192139",
+    "project_id": "firebase-letsmove"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238818192139:android:b6effbc91dde7cae",
+        "android_client_info": {
+          "package_name": "com.example.ankitrajput.letsmove"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238818192139-kk44t41954mdv10otftkkdfrfo4gemsr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8xxKU94L5clOSITqZO3-k2a-lLEG-e7c"
+        },
+        {
+          "current_key": "AIzaSyAuc_YsmpAvoEhSFIKDvP5w0gHVNWL7zBM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238818192139:android:66c920b63c4282e5",
+        "android_client_info": {
+          "package_name": "com.example.sachinpatel.letsmove"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238818192139-kk44t41954mdv10otftkkdfrfo4gemsr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8xxKU94L5clOSITqZO3-k2a-lLEG-e7c"
+        },
+        {
+          "current_key": "AIzaSyAuc_YsmpAvoEhSFIKDvP5w0gHVNWL7zBM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
