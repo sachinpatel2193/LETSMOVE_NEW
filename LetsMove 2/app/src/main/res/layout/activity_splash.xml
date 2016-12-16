@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.ankitrajput.letsmove.SplashActivity">
+    tools:context="com.example.sachinpatel.letsmove.SplashActivity">
 
 
     <ProgressBar
@@ -24,7 +24,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/icon"
+        android:src="@drawable/logo_transperant"
         android:layout_marginBottom="28dp"
         android:id="@+id/imageView2"
         android:layout_above="@+id/progressBar" />

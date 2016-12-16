@@ -48,7 +48,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="40dp"
-            tools:context="com.example.ankitrajput.letsmove.NewPost">
+            tools:context="com.example.sachinpatel.letsmove.NewPost">
 
 
             <EditText

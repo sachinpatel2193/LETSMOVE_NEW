@@ -56,7 +56,7 @@
         android:paddingRight="3dp"
         android:paddingTop="15dp"
         android:visibility="invisible"
-        tools:context="com.example.ankitrajput.letsmove.ViewUserDetails">
+        tools:context="com.example.sachinpatel.letsmove.ViewUserDetails">
 
 
         <LinearLayout

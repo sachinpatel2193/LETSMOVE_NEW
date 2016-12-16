@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ankitrajput.letsmove">
+    package="com.example.sachinpatel.letsmove">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -96,7 +96,9 @@
         <activity android:name=".BaseActivity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".ChatList" />
-        <activity android:name=".View_my_ratings"></activity>
+        <activity android:name=".View_my_ratings" />
+        <activity android:name=".help" />
+        <activity android:name=".help_transporter"></activity>
     </application>
 
 </manifest>

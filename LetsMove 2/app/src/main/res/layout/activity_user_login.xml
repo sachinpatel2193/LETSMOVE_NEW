@@ -18,7 +18,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="190dp"
                 android:layout_height="130dp"
-                android:src="@drawable/icon"/>
+                android:src="@drawable/logo_transperant"/>
 
         <LinearLayout
             android:id="@+id/linearlayout_login2"
